@@ -2,35 +2,22 @@
 // import { getPlaylist } from '../spotify';
 // import { catchErrors } from '../utils';
 // import Playlists from './Playlists';
+import { BASE_URL, OPTIONS } from "../spotify";
 
 export default function PlaylistSelectionStep(props) {
-  // if (props.currentStep !== 2) {
-  //   return null;
-  // }
+  if (props.currentStep !== 1) {
+    return null;
+  }
 
   
 
   async function choosePlaylist(playlistId) {
-    // const playlistId = "37i9dQZF1EVJSvZp5AOML2";
-    // var rn = Math.floor(Math.random() * playlists.length);
-    // var playlistId = playlists[rn].id;
-    const BASE_URL = "https://api.spotify.com/v1";
-    const OPTIONS = {
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": `Bearer ${props.accessToken}`,
-      }
-    }
+    const res = await fetch(`${BASE_URL}/playlists/${playlistId}`, OPTIONS);
+    const playlist = await res.json();
+    props.setChosenPlaylist(playlist);
+    props.setTracks(playlist.tracks.items);
 
-    try {
-      const res = await fetch(`${BASE_URL}/playlists/${playlistId}`, OPTIONS);
-      const playlist = await res.json();
-      props.setChosenPlaylist(playlist);
-      props.setTracks(playlist.tracks.items);
-    } catch (error) {
-      console.log(error);
-    }
+    props.setCurrentStep(2);
   }
 
   function renderPlaylists() {
@@ -50,7 +37,6 @@ export default function PlaylistSelectionStep(props) {
 
   return (
     <div>
-      
       <div className="playlists">{renderPlaylists()}</div>
       <hr />
     </div>

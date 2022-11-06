@@ -1,9 +1,9 @@
 // import Player from './Player';
 
 export default function GuessingStep(props) {
-  // if (props.currentStep !== 3) {
-  //   return null;
-  // }
+  if (props.currentStep !== 2) {
+    return null;
+  }
 
   // console.log(props);
 
@@ -28,6 +28,7 @@ export default function GuessingStep(props) {
     props.setGuess(userGuess ? userGuess : " ");
     // props.setGuess(userGuess);
     props.setIsGuessCorrect(userGuess === correctAnswer);
+    props.setCurrentStep(3);
   }
 
   return (

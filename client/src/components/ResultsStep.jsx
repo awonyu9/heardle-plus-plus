@@ -1,17 +1,15 @@
 
 
 export default function ResultsStep(props) {
-  // return null;
-  // if (props.currentStep !== 4) {
-  //   return null;
-  // }
+  if (props.currentStep !== 3) {
+    return null;
+  }
 
   // console.log(props.chosenPlaylist);
   // console.log(props.currentQuizTrack);
 
   return (
     <div>
-      <hr />
       <h3>Results</h3>
       {props.correctAnswer
       ? <h5>Congratulations!</h5>
@@ -23,6 +21,8 @@ export default function ResultsStep(props) {
       <img width={"10%"} src={props.currentQuizTrack.album.images[0].url} alt={props.currentQuizTrack.album.name} />
       <h5>Correct answer: {props.currentQuizTrack.name} by {props.currentQuizTrack.artists[0].name}</h5>
 
+      <button onClick={() => props.setCurrentStep(1)}>Play with another playlist</button>
+      <button onClick={() => props.setCurrentStep(2)}>Play with same playlist</button>
 
     </div>
   );

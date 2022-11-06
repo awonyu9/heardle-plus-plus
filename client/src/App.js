@@ -17,7 +17,7 @@ import {
        } from './components'
 
 export default function App() {
-  // const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(1);
   /* 
   1. login
   2. playlist selection
@@ -37,27 +37,19 @@ export default function App() {
     setToken(accessToken);
 
     async function getUserPlaylists() {
-
-      const limit = 3;
-      const offset = 1;
+      const params = new URLSearchParams({
+        limit: 3,
+        // offset: 1,
+      }).toString();
+      // const limit = 3;
+      // const offset = 1;
   
-      // const playlists = await getUserPlaylists();
-      // try {
-        const res = await fetch(`${BASE_URL}/me/playlists?limit=${limit}&offset=${offset}`, OPTIONS);
-        const playlists = await res.json();
-        setPlaylists(playlists.items);
-      // } catch (error) {
-      //   console.log(error);
-      // }
+      const res = await fetch(`${BASE_URL}/me/playlists?`+ params, OPTIONS);
+      const playlists = await res.json();
+      setPlaylists(playlists.items);
     }
 
     accessToken && catchErrors(getUserPlaylists());
-
-    // async function fetchData() {
-    //   const playlists = await getUserPlaylists();
-    //   setPlaylists(playlists.items);
-    // }
-    // catchErrors(fetchData());
   }, [])
 
   // maybe do this instead:
@@ -66,93 +58,22 @@ export default function App() {
   //   playlists: null
   // }
 
-  function handleGuessChange(event) {
-    setCurrentUserGuess(event.target.value);
-  }
-
-  // function handleChange(event) {
-  //   const {name, value} = event.target;
-  //   setState({
-  //       ...state,
-  //       [name]: value
-  //   });
-  // }
-  
-
-  
-
-  // async function choosePlaylist(playlistId) {
-  //   // const playlistId = "37i9dQZF1EVJSvZp5AOML2";
-  //   // var rn = Math.floor(Math.random() * playlists.length);
-  //   // var playlistId = playlists[rn].id;
-  //   try {
-  //     const res = await fetch(`${BASE_URL}/playlists/${playlistId}`, OPTIONS);
-  //     const playlist = await res.json();
-  //     setChosenPlaylist(playlist);
-  //     setTracks(playlist.tracks.items);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-  // figured that the root of the problem, is that when we use useEffect
-  // or call function here, it makes an infinite number of calls
-  // so we get a 429 error
-  // fix: map API call to button click
-
-  // catchErrors(fetchData());
-  // fetchData();
-
-  // console.log("playlists:", playlists);
-  // console.log("chosen playlist:", chosenPlaylist)
-  // console.log("tracks from one playlist:", tracks);
-
-  // function renderPlaylists() {
-  //   if (playlists) {
-  //     return playlists.map(playlist => (
-  //       <div className="playlist" key={playlist.id}>
-  //         <img width={"35%"} src={playlist.images[0].url} alt={playlist.name} onClick={() => catchErrors(choosePlaylist(playlist.id))} />
-  //         <p>{playlist.name}</p>
-  //       </div>
-  //     ))
-  //   }
-  // }
-
-  // function pickRandomSong() {
-  //   setCurrentUserGuess(null);
-  //   var randomIndex = Math.floor(Math.random() * tracks.length);
-  //   const randomTrack = tracks[randomIndex].track;
-  //   setCurrentQuizTrack(randomTrack);
-  //   document.getElementById("player").src = randomTrack.preview_url;
-  // }
-
   useEffect(() => {
     currentQuizTrack && console.log("current guessing track:", currentQuizTrack.name);
   }, [currentQuizTrack])
 
   useEffect(() => {
-    currentUserGuess && console.log("current user guess:", currentUserGuess);
-  }, [currentUserGuess])
+    chosenPlaylist && console.log("current playlist:", chosenPlaylist.name);
+  }, [chosenPlaylist])
 
   useEffect(() => {
-    playlists && console.log("playlists amount:", playlists.length);
-  }, [playlists])
+    console.log("current step:", currentStep);
+  }, [currentStep])
 
   // useEffect(() => {
-  //   console.log();
+  //   console.log(":", );
   // }, [])
   
-  // function checkAnswer() {
-  //   const userGuess = document.getElementById("guess").value.toLowerCase();
-  //   const correctAnswer = currentQuizTrack.name.toLowerCase();
-
-  //   // console.log("guess:", userGuess);
-  //   // console.log("answer:", correctAnswer);
-  //   console.log("correct?", userGuess === correctAnswer);
-
-  //   setCurrentUserGuess(userGuess);
-  //   setIsGuessCorrect(userGuess === correctAnswer);
-  // }
-
   return (
     <div className="App">
        <header className="App-header">
@@ -160,22 +81,16 @@ export default function App() {
         <hr />
        </header>
 
-        {/* <p>
-       {!token ?
-          <button><a href="http://localhost:8888/login">Log in
-              to Spotify</a></button>
-          : <button onClick={logout} className="logout">Log out</button>}
-        </p>
-        <hr /> */}
-
         <LoginStep
-          // currentStep={currentStep}
+          currentStep={currentStep}
+          setCurrentStep={setCurrentStep}
           token={token}
        />
 
         {token &&
           <PlaylistSelectionStep
-            // currentStep={currentStep}
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
             accessToken={accessToken}
             setChosenPlaylist={setChosenPlaylist}
             setTracks={setTracks}
@@ -186,12 +101,12 @@ export default function App() {
 
         {chosenPlaylist &&
           <GuessingStep
-            // currentStep={currentStep}
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
             setGuess={setCurrentUserGuess}
             currentTrack={currentQuizTrack}
             setTrack={setCurrentQuizTrack}
             setIsGuessCorrect={setIsGuessCorrect}
-            handleGuessChange={handleGuessChange}
             chosenPlaylist={chosenPlaylist}
             tracks={tracks}
           />
@@ -199,11 +114,11 @@ export default function App() {
 
         {currentUserGuess &&
           <ResultsStep
-            // currentStep={currentStep}
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
             correctAnswer={isGuessCorrect}
             currentQuizTrack={currentQuizTrack}
             chosenPlaylist={chosenPlaylist}
-
           />
         }
       
