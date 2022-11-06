@@ -3,7 +3,7 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import { 
         accessToken,
-        logout,
+        // logout,
         BASE_URL,
         OPTIONS
        } from './spotify';
@@ -39,7 +39,7 @@ export default function App() {
     async function getUserPlaylists() {
 
       const limit = 3;
-      const offset = 15;
+      const offset = 1;
   
       // const playlists = await getUserPlaylists();
       // try {
@@ -79,19 +79,7 @@ export default function App() {
   // }
   
 
-  async function getUserPlaylists() {
-    const limit = 3;
-    const offset = 15;
-
-    // const playlists = await getUserPlaylists();
-    try {
-      const res = await fetch(`${BASE_URL}/me/playlists?limit=${limit}&offset=${offset}`, OPTIONS);
-      const playlists = await res.json();
-      setPlaylists(playlists.items);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  
 
   // async function choosePlaylist(playlistId) {
   //   // const playlistId = "37i9dQZF1EVJSvZp5AOML2";
@@ -172,17 +160,17 @@ export default function App() {
         <hr />
        </header>
 
-        <p>
+        {/* <p>
        {!token ?
           <button><a href="http://localhost:8888/login">Log in
               to Spotify</a></button>
           : <button onClick={logout} className="logout">Log out</button>}
         </p>
-        <hr />
+        <hr /> */}
 
         <LoginStep
           // currentStep={currentStep}
-          token={accessToken}
+          token={token}
        />
 
         {token &&

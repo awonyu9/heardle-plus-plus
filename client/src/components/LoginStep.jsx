@@ -7,7 +7,7 @@ export default function LoginStep(props) {
 
   return (
     <div>
-      <p>Login step placeholder</p>
+      {/* <p>Login step placeholder</p> */}
       {!props.token ?
           <button><a href="http://localhost:8888/login">Log in
               to Spotify</a></button>
