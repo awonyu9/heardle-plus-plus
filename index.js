@@ -30,8 +30,8 @@ function generateRandomString(length) {
 const stateKey = 'spotify_auth_state';
 
 router.get('/login', (req, res) => {
-  const state = generateRandomString(16);
-  res.cookie(stateKey, state);
+  // const state = generateRandomString(16);
+  // res.cookie(stateKey, state);
 
   const scope = [
     'user-read-private',
@@ -42,7 +42,7 @@ router.get('/login', (req, res) => {
     client_id: CLIENT_ID,
     response_type: "code",
     redirect_uri: REDIRECT_URI,
-    state: state,
+    // state: state,
     scope: scope,
   }).toString();
   
