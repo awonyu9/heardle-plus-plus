@@ -118,8 +118,8 @@ export function logout() {
   window.location = window.location.origin;
 }
 
-const BASE_URL = "https://api.spotify.com/v1";
-const OPTIONS = {
+export const BASE_URL = "https://api.spotify.com/v1";
+export const OPTIONS = {
   headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",

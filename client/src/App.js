@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { 
         accessToken,
         logout,
+        BASE_URL,
+        OPTIONS
        } from './spotify';
 import { catchErrors } from './utils';
 // components:
@@ -32,7 +34,22 @@ export default function App() {
   useEffect(() => {
     setToken(accessToken);
 
-    catchErrors(getUserPlaylists());
+    async function getUserPlaylists() {
+
+      const limit = 3;
+      const offset = 15;
+  
+      // const playlists = await getUserPlaylists();
+      // try {
+        const res = await fetch(`${BASE_URL}/me/playlists?limit=${limit}&offset=${offset}`, OPTIONS);
+        const playlists = await res.json();
+        setPlaylists(playlists.items);
+      // } catch (error) {
+      //   console.log(error);
+      // }
+    }
+
+    accessToken && catchErrors(getUserPlaylists());
 
     // async function fetchData() {
     //   const playlists = await getUserPlaylists();
@@ -46,15 +63,6 @@ export default function App() {
   //   profile: null,
   //   playlists: null
   // }
-
-  const BASE_URL = "https://api.spotify.com/v1";
-  const OPTIONS = {
-  headers: {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": `Bearer ${accessToken}`,
-    }
-  }
 
   function handleGuessChange(event) {
     setCurrentUserGuess(event.target.value);
