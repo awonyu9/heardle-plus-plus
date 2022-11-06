@@ -21,10 +21,10 @@ export default function App() {
   4. results page
   */
 
-  const [token, setToken] = useState("");
-  const [playlists, setPlaylists] = useState({});
+  const [token, setToken] = useState(null);
+  const [playlists, setPlaylists] = useState(null);
   const [chosenPlaylist, setChosenPlaylist] = useState(null);
-  const [tracks, setTracks] = useState({});
+  const [tracks, setTracks] = useState(null);
   const [currentQuizTrack, setCurrentQuizTrack] = useState(null);
   const [CurrentUserGuess, setCurrentUserGuess] = useState(null);
   const [IsGuessCorrect, setIsGuessCorrect] = useState(false);
@@ -95,7 +95,7 @@ export default function App() {
   // console.log("tracks from one playlist:", tracks);
 
   function renderPlaylists() {
-    if (playlists.length > 0) {
+    if (playlists) {
       return playlists.map(playlist => (
         <div className="playlist" key={playlist.id}>
           <img width={"35%"} src={playlist.images[0].url} alt={playlist.name} onClick={() => choosePlaylist(playlist.id)} />
@@ -154,7 +154,7 @@ export default function App() {
 
         <div className="playlists">{renderPlaylists()}</div>
 
-        {playlists.length > 0 && <button onClick={catchErrors(choosePlaylist)}>Choose playlist</button>}
+        {playlists && <button onClick={catchErrors(choosePlaylist)}>Choose playlist</button>}
 
         {chosenPlaylist &&
         <div>
