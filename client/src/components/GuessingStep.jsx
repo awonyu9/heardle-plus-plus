@@ -24,7 +24,9 @@ export default function GuessingStep(props) {
     // console.log("answer:", correctAnswer);
     console.log("correct?", userGuess === correctAnswer);
 
-    props.setGuess(userGuess);
+    console.log(typeof(userGuess));
+    props.setGuess(userGuess ? userGuess : " ");
+    // props.setGuess(userGuess);
     props.setIsGuessCorrect(userGuess === correctAnswer);
   }
 
