@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 // import Player from './Player';
 
 export default function GuessingStep(props) {

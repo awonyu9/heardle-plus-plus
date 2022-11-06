@@ -8,7 +8,7 @@ import {
 import { catchErrors } from './utils';
 // components:
 // import LoginStep from './components/LoginStep';
-// import PlaylistSelectionStep from './components/PlaylistSelectionStep';
+import PlaylistSelectionStep from './components/PlaylistSelectionStep';
 import GuessingStep from './components/GuessingStep';
 import ResultsStep from './components/ResultsStep';
 
@@ -31,6 +31,8 @@ export default function App() {
 
   useEffect(() => {
     setToken(accessToken);
+
+    catchErrors(getUserPlaylists());
 
     // async function fetchData() {
     //   const playlists = await getUserPlaylists();
@@ -81,19 +83,19 @@ export default function App() {
     }
   }
 
-  async function choosePlaylist(playlistId) {
-    // const playlistId = "37i9dQZF1EVJSvZp5AOML2";
-    // var rn = Math.floor(Math.random() * playlists.length);
-    // var playlistId = playlists[rn].id;
-    try {
-      const res = await fetch(`${BASE_URL}/playlists/${playlistId}`, OPTIONS);
-      const playlist = await res.json();
-      setChosenPlaylist(playlist);
-      setTracks(playlist.tracks.items);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // async function choosePlaylist(playlistId) {
+  //   // const playlistId = "37i9dQZF1EVJSvZp5AOML2";
+  //   // var rn = Math.floor(Math.random() * playlists.length);
+  //   // var playlistId = playlists[rn].id;
+  //   try {
+  //     const res = await fetch(`${BASE_URL}/playlists/${playlistId}`, OPTIONS);
+  //     const playlist = await res.json();
+  //     setChosenPlaylist(playlist);
+  //     setTracks(playlist.tracks.items);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
   // figured that the root of the problem, is that when we use useEffect
   // or call function here, it makes an infinite number of calls
   // so we get a 429 error
@@ -106,16 +108,16 @@ export default function App() {
   // console.log("chosen playlist:", chosenPlaylist)
   // console.log("tracks from one playlist:", tracks);
 
-  function renderPlaylists() {
-    if (playlists) {
-      return playlists.map(playlist => (
-        <div className="playlist" key={playlist.id}>
-          <img width={"35%"} src={playlist.images[0].url} alt={playlist.name} onClick={() => catchErrors(choosePlaylist(playlist.id))} />
-          <p>{playlist.name}</p>
-        </div>
-      ))
-    }
-  }
+  // function renderPlaylists() {
+  //   if (playlists) {
+  //     return playlists.map(playlist => (
+  //       <div className="playlist" key={playlist.id}>
+  //         <img width={"35%"} src={playlist.images[0].url} alt={playlist.name} onClick={() => catchErrors(choosePlaylist(playlist.id))} />
+  //         <p>{playlist.name}</p>
+  //       </div>
+  //     ))
+  //   }
+  // }
 
   // function pickRandomSong() {
   //   setCurrentUserGuess(null);
@@ -133,9 +135,9 @@ export default function App() {
     currentUserGuess && console.log("current user guess:", currentUserGuess);
   }, [currentUserGuess])
 
-  // useEffect(() => {
-  //   isGuessCorrect && console.log("is guess correct:", isGuessCorrect);
-  // }, [isGuessCorrect])
+  useEffect(() => {
+    playlists && console.log("playlists amount:", playlists.length);
+  }, [playlists])
 
   // useEffect(() => {
   //   console.log();
@@ -168,22 +170,22 @@ export default function App() {
         </p>
         <hr />
 
-        {token && 
+        {/* {token && 
           <button onClick={catchErrors(getUserPlaylists)}>Start</button>
-        }
-
-        <div className="playlists">{renderPlaylists()}</div>
-
-        {/* {chosenPlaylist &&
-        <div>
-          <img width={"15%"} src={chosenPlaylist.images[0].url} alt={chosenPlaylist.name} />
-          <h5>Chosen playlist: {chosenPlaylist.name}</h5>
-          <button onClick={pickRandomSong}>Load player with random song</button>
-          <audio id="player" controls></audio>
-          <input type="text" id="guess" placeholder="Guess track name" />
-          <button onClick={checkAnswer}>Submit</button>
-        </div>
         } */}
+        {/*
+        <div className="playlists">{renderPlaylists()}</div> */}
+
+        {token &&
+          <PlaylistSelectionStep
+            // currentStep={currentStep}
+            accessToken={accessToken}
+            setChosenPlaylist={setChosenPlaylist}
+            setTracks={setTracks}
+            playlists={playlists}
+            catchErrors={catchErrors}
+          />
+        }
 
         {chosenPlaylist &&
           <GuessingStep
@@ -214,11 +216,7 @@ export default function App() {
           token={accessToken}
        />
 
-       <PlaylistSelectionStep
-          currentStep={currentStep}
-          moveOn={setCurrentStep}
-          setTracks={setTracks}
-       />
+       
 
         */}
 
