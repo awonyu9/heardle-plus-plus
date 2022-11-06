@@ -9,10 +9,12 @@ import {
        } from './spotify';
 import { catchErrors } from './utils';
 // components:
-// import LoginStep from './components/LoginStep';
-import PlaylistSelectionStep from './components/PlaylistSelectionStep';
-import GuessingStep from './components/GuessingStep';
-import ResultsStep from './components/ResultsStep';
+import {
+        LoginStep,
+        PlaylistSelectionStep,
+        GuessingStep,
+        ResultsStep
+       } from './components'
 
 export default function App() {
   // const [currentStep, setCurrentStep] = useState(1);
@@ -178,11 +180,10 @@ export default function App() {
         </p>
         <hr />
 
-        {/* {token && 
-          <button onClick={catchErrors(getUserPlaylists)}>Start</button>
-        } */}
-        {/*
-        <div className="playlists">{renderPlaylists()}</div> */}
+        <LoginStep
+          // currentStep={currentStep}
+          token={accessToken}
+       />
 
         {token &&
           <PlaylistSelectionStep
@@ -217,17 +218,6 @@ export default function App() {
 
           />
         }
-
-       {/* <LoginStep
-          currentStep={currentStep}
-          moveOn={setCurrentStep}
-          token={accessToken}
-       />
-
-       
-
-        */}
-
       
     </div>
   );
