@@ -69,10 +69,10 @@ export default function App() {
     }
   }
 
-  async function choosePlaylist() {
+  async function choosePlaylist(playlistId) {
     // const playlistId = "37i9dQZF1EVJSvZp5AOML2";
-    var rn = Math.floor(Math.random() * playlists.length);
-    var playlistId = playlists[rn].id;
+    // var rn = Math.floor(Math.random() * playlists.length);
+    // var playlistId = playlists[rn].id;
     try {
       const res = await fetch(`${BASE_URL}/playlists/${playlistId}`, OPTIONS);
       const playlist = await res.json();
@@ -97,8 +97,8 @@ export default function App() {
   function renderPlaylists() {
     if (playlists.length > 0) {
       return playlists.map(playlist => (
-        <div className="playlist">
-          <img width={"35%"} src={playlist.images[0].url} alt={playlist.name} />
+        <div className="playlist" key={playlist.id}>
+          <img width={"35%"} src={playlist.images[0].url} alt={playlist.name} onClick={() => choosePlaylist(playlist.id)} />
           <p>{playlist.name}</p>
         </div>
       ))
@@ -106,7 +106,7 @@ export default function App() {
   }
 
   function pickRandomSong() {
-    setCurrentUserGuess(null);
+    // setCurrentUserGuess(null);
     var randomIndex = Math.floor(Math.random() * tracks.length);
     const randomTrack = tracks[randomIndex].track;
     setCurrentQuizTrack(randomTrack);
