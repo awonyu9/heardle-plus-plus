@@ -1,6 +1,7 @@
 
 
 export default function ResultsStep(props) {
+  // return null;
   // if (props.currentStep !== 4) {
   //   return null;
   // }

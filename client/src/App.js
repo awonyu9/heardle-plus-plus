@@ -8,8 +8,8 @@ import {
 import { catchErrors } from './utils';
 // components:
 // import LoginStep from './components/LoginStep';
-// import GuessingStep from './components/GuessingStep';
 // import PlaylistSelectionStep from './components/PlaylistSelectionStep';
+import GuessingStep from './components/GuessingStep';
 import ResultsStep from './components/ResultsStep';
 
 export default function App() {
@@ -26,8 +26,8 @@ export default function App() {
   const [chosenPlaylist, setChosenPlaylist] = useState(null);
   const [tracks, setTracks] = useState(null);
   const [currentQuizTrack, setCurrentQuizTrack] = useState(null);
-  const [CurrentUserGuess, setCurrentUserGuess] = useState(null);
-  const [IsGuessCorrect, setIsGuessCorrect] = useState(false);
+  const [currentUserGuess, setCurrentUserGuess] = useState(null);
+  const [isGuessCorrect, setIsGuessCorrect] = useState(false);
 
   useEffect(() => {
     setToken(accessToken);
@@ -53,6 +53,18 @@ export default function App() {
     "Authorization": `Bearer ${accessToken}`,
     }
   }
+
+  function handleGuessChange(event) {
+    setCurrentUserGuess(event.target.value);
+  }
+
+  // function handleChange(event) {
+  //   const {name, value} = event.target;
+  //   setState({
+  //       ...state,
+  //       [name]: value
+  //   });
+  // }
   
 
   async function getUserPlaylists() {
@@ -98,40 +110,48 @@ export default function App() {
     if (playlists) {
       return playlists.map(playlist => (
         <div className="playlist" key={playlist.id}>
-          <img width={"35%"} src={playlist.images[0].url} alt={playlist.name} onClick={() => choosePlaylist(playlist.id)} />
+          <img width={"35%"} src={playlist.images[0].url} alt={playlist.name} onClick={() => catchErrors(choosePlaylist(playlist.id))} />
           <p>{playlist.name}</p>
         </div>
       ))
     }
   }
 
-  function pickRandomSong() {
-    // setCurrentUserGuess(null);
-    var randomIndex = Math.floor(Math.random() * tracks.length);
-    const randomTrack = tracks[randomIndex].track;
-    setCurrentQuizTrack(randomTrack);
-    document.getElementById("player").src = randomTrack.preview_url;
-  }
+  // function pickRandomSong() {
+  //   setCurrentUserGuess(null);
+  //   var randomIndex = Math.floor(Math.random() * tracks.length);
+  //   const randomTrack = tracks[randomIndex].track;
+  //   setCurrentQuizTrack(randomTrack);
+  //   document.getElementById("player").src = randomTrack.preview_url;
+  // }
+
+  useEffect(() => {
+    currentQuizTrack && console.log("current guessing track:", currentQuizTrack.name);
+  }, [currentQuizTrack])
+
+  useEffect(() => {
+    currentUserGuess && console.log("current user guess:", currentUserGuess);
+  }, [currentUserGuess])
 
   // useEffect(() => {
-  //   currentQuizTrack && console.log("current guessing track:", currentQuizTrack.name);
-  // }, [currentQuizTrack])
+  //   isGuessCorrect && console.log("is guess correct:", isGuessCorrect);
+  // }, [isGuessCorrect])
 
   // useEffect(() => {
   //   console.log();
   // }, [])
   
-  function checkAnswer() {
-    const userGuess = document.getElementById("guess").value.toLowerCase();
-    const correctAnswer = currentQuizTrack.name.toLowerCase();
+  // function checkAnswer() {
+  //   const userGuess = document.getElementById("guess").value.toLowerCase();
+  //   const correctAnswer = currentQuizTrack.name.toLowerCase();
 
-    // console.log("guess:", userGuess);
-    // console.log("answer:", correctAnswer);
-    console.log("correct?", userGuess === correctAnswer);
+  //   // console.log("guess:", userGuess);
+  //   // console.log("answer:", correctAnswer);
+  //   console.log("correct?", userGuess === correctAnswer);
 
-    setCurrentUserGuess(userGuess);
-    setIsGuessCorrect(userGuess === correctAnswer);
-  }
+  //   setCurrentUserGuess(userGuess);
+  //   setIsGuessCorrect(userGuess === correctAnswer);
+  // }
 
   return (
     <div className="App">
@@ -154,9 +174,7 @@ export default function App() {
 
         <div className="playlists">{renderPlaylists()}</div>
 
-        {playlists && <button onClick={catchErrors(choosePlaylist)}>Choose playlist</button>}
-
-        {chosenPlaylist &&
+        {/* {chosenPlaylist &&
         <div>
           <img width={"15%"} src={chosenPlaylist.images[0].url} alt={chosenPlaylist.name} />
           <h5>Chosen playlist: {chosenPlaylist.name}</h5>
@@ -165,11 +183,25 @@ export default function App() {
           <input type="text" id="guess" placeholder="Guess track name" />
           <button onClick={checkAnswer}>Submit</button>
         </div>
+        } */}
+
+        {chosenPlaylist &&
+          <GuessingStep
+            // currentStep={currentStep}
+            setGuess={setCurrentUserGuess}
+            currentTrack={currentQuizTrack}
+            setTrack={setCurrentQuizTrack}
+            setIsGuessCorrect={setIsGuessCorrect}
+            handleGuessChange={handleGuessChange}
+            chosenPlaylist={chosenPlaylist}
+            tracks={tracks}
+          />
         }
 
-        {CurrentUserGuess &&
+        {currentUserGuess &&
           <ResultsStep
-            correctAnswer={IsGuessCorrect}
+            // currentStep={currentStep}
+            correctAnswer={isGuessCorrect}
             currentQuizTrack={currentQuizTrack}
             chosenPlaylist={chosenPlaylist}
 
@@ -188,11 +220,7 @@ export default function App() {
           setTracks={setTracks}
        />
 
-       <GuessingStep
-          currentStep={currentStep}
-          moveOn={setCurrentStep}
-          tracks={tracks}
-       /> */}
+        */}
 
       
     </div>
