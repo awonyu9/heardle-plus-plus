@@ -19,7 +19,11 @@ export default function ResultsStep(props) {
       <h5>Playlist chosen: {props.chosenPlaylist.name}</h5> */}
 
       <img width={"10%"} src={props.currentQuizTrack.album.images[0].url} alt={props.currentQuizTrack.album.name} />
-      <h5>Correct answer: {props.currentQuizTrack.name} by {props.currentQuizTrack.artists[0].name}</h5>
+      <h5>
+        <a href={props.currentQuizTrack.external_urls.spotify}>
+          Correct answer: {props.currentQuizTrack.name} by {props.currentQuizTrack.artists[0].name}
+        </a>
+      </h5>
 
       <button onClick={() => props.setCurrentStep(1)}>Play with another playlist</button>
       <button onClick={() => props.setCurrentStep(2)}>Play with same playlist</button>
