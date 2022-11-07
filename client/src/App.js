@@ -39,7 +39,7 @@ export default function App() {
     async function getUserPlaylists() {
       const params = new URLSearchParams({
         limit: 3,
-        // offset: 1,
+        offset: 1,
       }).toString();
       // const limit = 3;
       // const offset = 1;
@@ -58,17 +58,17 @@ export default function App() {
   //   playlists: null
   // }
 
-  useEffect(() => {
-    currentQuizTrack && console.log("current guessing track:", currentQuizTrack.name);
-  }, [currentQuizTrack])
+  // useEffect(() => {
+  //   currentQuizTrack && console.log("current guessing track:", currentQuizTrack.name);
+  // }, [currentQuizTrack])
 
-  useEffect(() => {
-    chosenPlaylist && console.log("current playlist:", chosenPlaylist.name);
-  }, [chosenPlaylist])
+  // useEffect(() => {
+  //   chosenPlaylist && console.log("current playlist:", chosenPlaylist.name);
+  // }, [chosenPlaylist])
 
-  useEffect(() => {
-    console.log("current step:", currentStep);
-  }, [currentStep])
+  // useEffect(() => {
+  //   console.log("current step:", currentStep);
+  // }, [currentStep])
 
   // useEffect(() => {
   //   console.log(":", );
@@ -95,7 +95,6 @@ export default function App() {
             setChosenPlaylist={setChosenPlaylist}
             setTracks={setTracks}
             playlists={playlists}
-            catchErrors={catchErrors}
           />
         }
 

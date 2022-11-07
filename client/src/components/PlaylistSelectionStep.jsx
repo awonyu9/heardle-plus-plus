@@ -1,6 +1,6 @@
 // import { useEffect } from 'react';
 // import { getPlaylist } from '../spotify';
-// import { catchErrors } from '../utils';
+import { catchErrors } from '../utils';
 // import Playlists from './Playlists';
 import { BASE_URL, OPTIONS } from "../spotify";
 
@@ -28,7 +28,7 @@ export default function PlaylistSelectionStep(props) {
             width={"35%"}
             src={playlist.images[0].url}
             alt={playlist.name}
-            onClick={() => props.catchErrors(choosePlaylist(playlist.id))} />
+            onClick={() => catchErrors(choosePlaylist(playlist.id))} />
           <p>{playlist.name}</p>
         </div>
       ))
