@@ -1,5 +1,8 @@
 import { useEffect } from "react";
 import { catchErrors } from "../utils";
+import KeyboardReact from "react-simple-keyboard";
+import 'react-simple-keyboard/build/css/index.css';
+import layout from "simple-keyboard-layouts/build/layouts/japanese";
 // import Player from './Player';
 
 export default function GuessingStep(props) {
@@ -10,6 +13,11 @@ export default function GuessingStep(props) {
   if (props.currentStep !== 2) {
     return null;
   }
+
+  const keyboard = new KeyboardReact({
+    onChange: handleKeyboardPress,
+    ...layout,
+  })
 
   // console.log(props);
 
@@ -49,6 +57,10 @@ export default function GuessingStep(props) {
     }
   }
 
+  function handleKeyboardPress(event) {
+    document.getElementById("guess").value = event.target.value;
+  }
+
   return (
     <div>
       <img width={"15%"} src={props.chosenPlaylist.images[0].url} alt={props.chosenPlaylist.name} />
@@ -56,6 +68,7 @@ export default function GuessingStep(props) {
       <button onClick={pickRandomSong}>Load player with random song</button>
       <audio id="player" controls></audio>
       <input type="text" id="guess" placeholder="Guess track name" onKeyUp={catchErrors(showSuggestion)} />
+      {keyboard}
       <p id="suggestion"></p>
       <button onClick={checkAnswer}>Submit</button>
     </div>
