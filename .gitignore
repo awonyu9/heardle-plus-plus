@@ -2,4 +2,6 @@
 node_modules
 .env
 to-do.txt
+
 client/src/Test.js
+client/src/App_og.js

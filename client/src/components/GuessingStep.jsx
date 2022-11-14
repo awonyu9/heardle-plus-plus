@@ -14,10 +14,10 @@ export default function GuessingStep(props) {
     return null;
   }
 
-  const keyboard = new KeyboardReact({
-    onChange: handleKeyboardPress,
-    ...layout,
-  })
+  // const keyboard = new KeyboardReact({
+  //   onChange: handleKeyboardPress,
+  //   ...layout,
+  // })
 
   // console.log(props);
 
@@ -57,9 +57,9 @@ export default function GuessingStep(props) {
     }
   }
 
-  function handleKeyboardPress(event) {
-    document.getElementById("guess").value = event.target.value;
-  }
+  // function handleKeyboardPress(event) {
+  //   document.getElementById("guess").value = event.target.value;
+  // }
 
   return (
     <div>
@@ -68,7 +68,7 @@ export default function GuessingStep(props) {
       <button onClick={pickRandomSong}>Load player with random song</button>
       <audio id="player" controls></audio>
       <input type="text" id="guess" placeholder="Guess track name" onKeyUp={catchErrors(showSuggestion)} />
-      {keyboard}
+      {/* {keyboard} */}
       <p id="suggestion"></p>
       <button onClick={checkAnswer}>Submit</button>
     </div>
