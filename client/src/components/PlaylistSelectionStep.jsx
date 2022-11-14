@@ -38,7 +38,6 @@ export default function PlaylistSelectionStep(props) {
   return (
     <div>
       <div className="playlists">{renderPlaylists()}</div>
-      <hr />
     </div>
   );
 }

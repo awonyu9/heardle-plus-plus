@@ -78,14 +78,16 @@ export default function App() {
     <div className="App">
        <header className="App-header">
         <h1>Quizify (Heardle++)</h1>
+        {currentStep >= 1 &&
+          <LoginStep
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+            token={token}
+          />
+        }
         <hr />
        </header>
 
-        <LoginStep
-          currentStep={currentStep}
-          setCurrentStep={setCurrentStep}
-          token={token}
-       />
 
         {token &&
           <PlaylistSelectionStep

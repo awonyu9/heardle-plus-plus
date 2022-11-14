@@ -14,7 +14,6 @@ export default function LoginStep(props) {
           : <button onClick={logout} className="logout">Log out</button>}
 
       {/* {props.token && props.moveOn(2)} */}
-      <hr />
 
     </div>
   );

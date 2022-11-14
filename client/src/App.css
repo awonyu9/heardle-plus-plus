@@ -9,8 +9,15 @@
   color: white;
 } */
 
-* {
-  background-color: pink;
+:root {
+  --quizify-pink: #FD7B7B;
+  /* background: linear-gradient(pink, var(--quizify-pink)); */
+  background-color: var(--quizify-pink);
+  text-align: center;
+}
+
+a, button, img { /* quick fix but no good */
+  cursor: pointer;
 }
 
 hr {
@@ -54,4 +61,25 @@ h5 {
 
 .simple-keyboard {
   font-size: 10px;
+}
+
+.play-pause-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.play-pause-button {
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-size: 80px;
+  cursor: pointer;
+}
+
+.play-button {
+  background-image: url("./icons/play-button.png");
+}
+
+.pause-button {
+  background-image: url("./icons/pause-button.png");
 }
