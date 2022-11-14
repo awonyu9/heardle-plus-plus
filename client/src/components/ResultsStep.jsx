@@ -21,7 +21,7 @@ export default function ResultsStep(props) {
       <img width={"10%"} src={props.currentQuizTrack.album.images[0].url} alt={props.currentQuizTrack.album.name} />
       <h5>
         Correct answer: 
-        <a href={props.currentQuizTrack.external_urls.spotify}>
+        <a href={props.currentQuizTrack.external_urls.spotify} target="_blank" rel="noopener noreferrer">
           {props.currentQuizTrack.name} by {props.currentQuizTrack.artists[0].name} ({props.currentQuizTrack.album.release_date.slice(0, 4)})
         </a>
       </h5>
