@@ -17,7 +17,7 @@ router.use((req, res, next) => {
 
 function generateRandomString(length) {
   let text = '';
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
   for (let i = 0; i < length; i++) {
     let randomIndex = Math.floor(Math.random() * possible.length);
@@ -30,8 +30,8 @@ function generateRandomString(length) {
 const stateKey = 'spotify_auth_state';
 
 router.get('/login', (req, res) => {
-  // const state = generateRandomString(16);
-  // res.cookie(stateKey, state);
+  const state = generateRandomString(16);
+  res.cookie(stateKey, state);
 
   const scope = [
     'user-read-private',
@@ -40,9 +40,9 @@ router.get('/login', (req, res) => {
 
   const params = new URLSearchParams({
     client_id: CLIENT_ID,
-    response_type: "code",
+    response_type: 'code',
     redirect_uri: REDIRECT_URI,
-    // state: state,
+    state: state,
     scope: scope,
   }).toString();
   
@@ -82,9 +82,15 @@ router.get('/callback', async (req, res) => {
         expires_in,
       }).toString();
 
-      res.redirect(`http://127.0.0.1:3000/?${params}`);
+      // const t = await fetch(`http://localhost:8888/refresh_token?refresh_token=${refresh_token}`, {
+      // })
+
+      // const tt = await t.json();
+      // res.send(tt);
+
+      res.redirect(`http://localhost:3000/?${params}`);
     } else {
-        res.redirect(`/?${new URLSearchParams({error: 'invalid_token'}).toString()}`);
+      res.redirect(`/?${new URLSearchParams({error: 'invalid_token'}).toString()}`);
     }
     
   } catch (error) {

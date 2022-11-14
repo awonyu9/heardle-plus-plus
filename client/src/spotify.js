@@ -87,13 +87,13 @@ async function refreshToken() {
       }
 
       // Use `/refresh_token` endpoint from our Node app
-      const res = await fetch(`http://127.0.0.1:8888/refresh_token?refresh_token=${LOCALSTORAGE_VALUES.refreshToken}`);
+      const res = await fetch(`/refresh_token?refresh_token=${LOCALSTORAGE_VALUES.refreshToken}`);
       const data = await res.json();
 
       console.log("from refreshToken()", data);
 
       // Update localStorage values
-      window.localStorage.setItem(LOCALSTORAGE_KEYS.accessToken, data.accessToken);
+      window.localStorage.setItem(LOCALSTORAGE_KEYS.accessToken, data.access_token);
       window.localStorage.setItem(LOCALSTORAGE_KEYS.timestamp, Date.now());
 
       // Reload the page for localStorage updates to be reflected
