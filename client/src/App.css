@@ -57,18 +57,24 @@ input {background-color: white;}
 
 h5 {
   margin-top: 0.5px;
+  color: white;
 }
 
 .simple-keyboard {
   font-size: 10px;
 }
 
-.play-pause-buttons {
+.player {
   display: flex;
   justify-content: center;
 }
 
-.play-pause-button {
+.audio-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.audio-button {
   width: 100px;
   height: 100px;
   background-repeat: no-repeat;

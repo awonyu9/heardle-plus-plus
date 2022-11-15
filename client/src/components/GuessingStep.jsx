@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { catchErrors } from "../utils";
 import KeyboardReact from "react-simple-keyboard";
 import 'react-simple-keyboard/build/css/index.css';
@@ -9,6 +9,9 @@ export default function GuessingStep(props) {
   useEffect(() => {
     // need to load player with random song when component is mounted
   }, []);
+
+  const [hasStarted, setHasStarted] = useState(false);
+  
 
   if (props.currentStep !== 2) {
     return null;
@@ -27,6 +30,9 @@ export default function GuessingStep(props) {
     const randomTrack = props.tracks[randomIndex].track;
     props.setTrack(randomTrack);
     document.getElementById("player").src = randomTrack.preview_url;
+    const player = document.getElementById("player");
+    console.log(player.src, player.srcObject);
+    setHasStarted(true);
   }
 
   function checkAnswer() {
@@ -38,22 +44,43 @@ export default function GuessingStep(props) {
     // console.log("answer:", correctAnswer);
     console.log("correct?", userGuess === correctAnswer);
 
-    console.log(typeof(userGuess));
+    
     props.setGuess(userGuess ? userGuess : " ");
     // props.setGuess(userGuess);
     props.setIsGuessCorrect(userGuess === correctAnswer);
+    setHasStarted(false);
     props.setCurrentStep(3);
   }
 
-  async function showSuggestion(event) {
-    var str = event.target.value;
-    const suggestionBox = document.getElementById("suggestion");
-    if (str === "") {
-      suggestionBox.innerHTML = "";
+  // async function showSuggestion(event) {
+  //   var str = event.target.value;
+  //   const suggestionBox = document.getElementById("suggestion");
+  //   if (str === "") {
+  //     suggestionBox.innerHTML = "";
+  //   } else {
+  //     const data = await fetch("http://127.0.0.1:80/Aburg/track_suggestions.php?q="+str);
+  //     const res = await data.json();
+  //     suggestionBox.innerHTML = res;
+  //   }
+  // }
+
+  function toggleAudio() {
+    const player = document.getElementById("player");
+    const audioButton = document.querySelector(".audio-button");
+    if (player.src.includes("mp3")) {
+      if (player.paused) {
+        player.play();
+        audioButton.classList.remove("play-button");
+        audioButton.classList.add("pause-button");
+        // playerButton.innerHTML = pauseIcon;
+      } else {
+        player.pause();
+        audioButton.classList.remove("pause-button");
+        audioButton.classList.add("play-button");
+        // playerButton.innerHTML = playIcon;
+      }
     } else {
-      const data = await fetch("http://127.0.0.1:80/Aburg/track_suggestions.php?q="+str);
-      const res = await data.json();
-      suggestionBox.innerHTML = res;
+      pickRandomSong();
     }
   }
 
@@ -64,13 +91,25 @@ export default function GuessingStep(props) {
   return (
     <div>
       <img width={"15%"} src={props.chosenPlaylist.images[0].url} alt={props.chosenPlaylist.name} />
-      <h5>Chosen playlist: {props.chosenPlaylist.name}</h5>
-      <button onClick={pickRandomSong}>Load player with random song</button>
-      <audio id="player" controls></audio>
-      <input type="text" id="guess" placeholder="Guess track name" onKeyUp={catchErrors(showSuggestion)} />
-      {/* {keyboard} */}
-      <p id="suggestion"></p>
-      <button onClick={checkAnswer}>Submit</button>
+      <h5>{props.chosenPlaylist.name}</h5>
+      {!hasStarted && <button onClick={pickRandomSong}>Click here to start</button>}
+      {hasStarted &&
+        <div>
+          <div className="audio-buttons">
+            <div onClick={() => toggleAudio()} className="audio-button play-button">
+            </div>
+          </div>
+          <input type="text" id="guess" placeholder="Guess track name" />
+          <p></p>
+          <button onClick={checkAnswer}>Submit</button>
+        </div>
+      }
+      
+      <div className="player"><audio id="player"></audio></div>
     </div>
   );
 }
+
+// {/* <input type="text" id="guess" placeholder="Guess track name" onKeyUp={catchErrors(showSuggestion)} /> */}
+//       {/* {keyboard} */}
+// {/* <p id="suggestion"></p> */}
