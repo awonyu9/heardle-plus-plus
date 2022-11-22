@@ -6,13 +6,24 @@ import { useState, useEffect } from "react";
 // import Player from './Player';
 
 export default function GuessingStep(props) {
-  useEffect(() => {
-    // need to load player with random song when component is mounted
-  }, []);
+  
+  var chosenPlaylistTrackNames = [];
+  // console.log("chosen playlist: ", props.chosenPlaylist);
+  if (props.chosenPlaylist) {
+    // chosenPlaylistTrackNames = [];
+    var chosenPlaylistTracks = props.chosenPlaylist.tracks.items;
+    // console.log("the tracks: ", chosenPlaylistTracks);
+    for (let i = 0; i < chosenPlaylistTracks.length; i++) {
+      // console.log("a track:", chosenPlaylistTracks[i].track.name);
+      chosenPlaylistTrackNames.push(chosenPlaylistTracks[i].track.name);
+    }
+    // console.log(chosenPlaylistTrackNames);
+  }
 
   const [hasStarted, setHasStarted] = useState(false);
+  // const [guessSoFar, setGuessSoFar] = useState("");
   
-  const currTrackLength = 3.0;
+  // const currTrackLength = 3.0;
 
   if (props.currentStep !== 2) {
     return null;
@@ -70,6 +81,21 @@ export default function GuessingStep(props) {
   //   }
   // }
 
+  function showSuggestion(event) {
+    // setGuessSoFar(event.target.value);
+    // console.log(chosenPlaylistTrackNames);
+    var suggestions = [];
+    var gg = event.target.value.toLowerCase();
+    for (let i = 0; i < chosenPlaylistTrackNames.length; i++) {
+      var trackName = chosenPlaylistTrackNames[i].toLowerCase();
+      
+      if (trackName.includes(gg) && suggestions.length < 5) {
+        suggestions.push(chosenPlaylistTrackNames[i]);
+      }
+    }
+    document.getElementById("suggestions").innerHTML = suggestions.join(", ");
+  }
+
   function toggleAudio() {
     const player = document.getElementById("player");
     const audioButton = document.querySelector(".audio-button");
@@ -105,8 +131,8 @@ export default function GuessingStep(props) {
             <div onClick={() => toggleAudio()} className="audio-button play-button">
             </div>
           </div>
-          <input type="text" id="guess" placeholder="Guess track name" />
-          <p></p>
+          <input type="text" id="guess" placeholder="Guess track name" onChange={showSuggestion} />
+          <p id="suggestions">suggestions placeholder</p>
           <button onClick={checkAnswer}>Submit</button>
         </div>
       }
