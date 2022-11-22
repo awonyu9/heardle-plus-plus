@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { catchErrors } from "../utils";
-import KeyboardReact from "react-simple-keyboard";
-import 'react-simple-keyboard/build/css/index.css';
-import layout from "simple-keyboard-layouts/build/layouts/japanese";
+// import { catchErrors } from "../utils";
+// import KeyboardReact from "react-simple-keyboard";
+// import 'react-simple-keyboard/build/css/index.css';
+// import layout from "simple-keyboard-layouts/build/layouts/japanese";
 // import Player from './Player';
 
 export default function GuessingStep(props) {
@@ -12,6 +12,7 @@ export default function GuessingStep(props) {
 
   const [hasStarted, setHasStarted] = useState(false);
   
+  const currTrackLength = 3.0;
 
   if (props.currentStep !== 2) {
     return null;
@@ -29,9 +30,14 @@ export default function GuessingStep(props) {
     var randomIndex = Math.floor(Math.random() * props.tracks.length);
     const randomTrack = props.tracks[randomIndex].track;
     props.setTrack(randomTrack);
-    document.getElementById("player").src = randomTrack.preview_url;
     const player = document.getElementById("player");
-    console.log(player.src, player.srcObject);
+    player.src = randomTrack.preview_url;
+    player.volume = 0.3;
+
+
+    // const player = document.getElementById("player");
+    // console.log(player.src, player.srcObject);
+
     setHasStarted(true);
   }
 
