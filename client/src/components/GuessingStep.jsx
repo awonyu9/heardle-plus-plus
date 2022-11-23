@@ -20,6 +20,8 @@ export default function GuessingStep(props) {
     // console.log(chosenPlaylistTrackNames);
   }
 
+  var currPlayableTracks = props.tracks;
+
   const [hasStarted, setHasStarted] = useState(false);
   // const [guessSoFar, setGuessSoFar] = useState("");
   
@@ -37,10 +39,15 @@ export default function GuessingStep(props) {
   // console.log(props);
 
   function pickRandomSong() {
+    // error here where sometimes clicking doesn't fetch a song
+    // poses problems when removing eligible items as we do here
     props.setGuess(null);
-    var randomIndex = Math.floor(Math.random() * props.tracks.length);
-    const randomTrack = props.tracks[randomIndex].track;
+    var randomIndex = Math.floor(Math.random() * currPlayableTracks.length);
+    const randomTrack = currPlayableTracks[randomIndex].track;
     props.setTrack(randomTrack);
+    console.log(currPlayableTracks);
+    currPlayableTracks.splice(randomIndex, 1);
+
     const player = document.getElementById("player");
     player.src = randomTrack.preview_url;
     player.volume = 0.3;
@@ -102,11 +109,13 @@ export default function GuessingStep(props) {
     if (player.src.includes("mp3")) {
       if (player.paused) {
         player.play();
+        console.log("playing");
         audioButton.classList.remove("play-button");
         audioButton.classList.add("pause-button");
         // playerButton.innerHTML = pauseIcon;
       } else {
         player.pause();
+        console.log("paused");
         audioButton.classList.remove("pause-button");
         audioButton.classList.add("play-button");
         // playerButton.innerHTML = playIcon;
@@ -128,7 +137,8 @@ export default function GuessingStep(props) {
       {hasStarted &&
         <div>
           <div className="audio-buttons">
-            <div onClick={() => toggleAudio()} className="audio-button play-button">
+            <div onClick={toggleAudio} className="audio-button play-button">
+              {/* onClick={() => toggleAudio} */}
             </div>
           </div>
           <input type="text" id="guess" placeholder="Guess track name" onChange={showSuggestion} />

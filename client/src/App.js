@@ -90,7 +90,7 @@ export default function App() {
        </header>
 
 
-        {token &&
+        {(token && playlists) &&
           <PlaylistSelectionStep
             currentStep={currentStep}
             setCurrentStep={setCurrentStep}
