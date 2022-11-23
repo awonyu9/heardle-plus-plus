@@ -85,11 +85,11 @@ export default function GuessingStep(props) {
     // setGuessSoFar(event.target.value);
     // console.log(chosenPlaylistTrackNames);
     var suggestions = [];
-    var gg = event.target.value.toLowerCase();
+    var guessSoFar = event.target.value.toLowerCase();
     for (let i = 0; i < chosenPlaylistTrackNames.length; i++) {
       var trackName = chosenPlaylistTrackNames[i].toLowerCase();
       
-      if (trackName.includes(gg) && suggestions.length < 5) {
+      if (trackName.includes(guessSoFar) && suggestions.length < 5) {
         suggestions.push(chosenPlaylistTrackNames[i]);
       }
     }

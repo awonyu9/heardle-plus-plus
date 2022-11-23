@@ -39,8 +39,8 @@ export default function App() {
 
     async function getUserPlaylists() {
       const params = new URLSearchParams({
-        limit: 3,
-        offset: 1,
+        // limit: 3,
+        // offset: 1,
       }).toString();
       // const limit = 3;
       // const offset = 1;
