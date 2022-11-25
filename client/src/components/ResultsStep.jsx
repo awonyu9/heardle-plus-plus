@@ -18,7 +18,7 @@ export default function ResultsStep(props) {
       {/* <img width={"15%"} src={props.chosenPlaylist.images[0].url} alt={props.chosenPlaylist.name} />
       <h5>Playlist chosen: {props.chosenPlaylist.name}</h5> */}
 
-      <img width={"10%"} src={props.currentQuizTrack.album.images[0].url} alt={props.currentQuizTrack.album.name} />
+      <img width={"15%"} src={props.currentQuizTrack.album.images[0].url} alt={props.currentQuizTrack.album.name} />
       <h5>
         Correct answer: 
         <a href={props.currentQuizTrack.external_urls.spotify} target="_blank" rel="noopener noreferrer">

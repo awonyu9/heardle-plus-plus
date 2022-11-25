@@ -49,15 +49,33 @@ audio {
   display: flex;
 }
 
-.playlists {
-  display: inline-flex;
+p {
+  font-size: larger;
 }
 
-input {background-color: white;}
+input {
+  background-color: white;
+}
 
 h5 {
   margin-top: 0.5px;
   color: white;
+}
+
+.playlists {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.playlist {
+  width: 300px;
+}
+
+.navButton {
+  margin-left: 5px;
+  border-radius: 50%;
 }
 
 .simple-keyboard {

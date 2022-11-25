@@ -73,14 +73,14 @@ export default function App() {
       ...playlistsData.items
     ]));
 
-    console.log(typeof(playlistsData), typeof(playlistsData.items))
+    // console.log(typeof(playlistsData), typeof(playlistsData.items))
     
     catchErrors(fetchMorePlaylists());
     // console.log(playlistsData.next);
 
   }, [playlistsData])
 
-  console.log("amount of playlists:", playlists && playlists.length);
+  // console.log("amount of playlists:", playlists && playlists.length);
 
   // maybe do this instead:
   // const [state, setState] = {

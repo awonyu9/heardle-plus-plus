@@ -10,6 +10,8 @@ export default function PlaylistSelectionStep(props) {
   if (props.currentStep !== 1) {
     return null;
   }
+
+  const amountOfPlaylistsShown = 4;
   
 
   async function choosePlaylist(playlistId) {
@@ -23,10 +25,10 @@ export default function PlaylistSelectionStep(props) {
 
   function renderPlaylists() {
     if (props.playlists) {
-      var renderedPlaylists = props.playlists.slice(currOffset, currOffset+3).map(playlist => (
+      var renderedPlaylists = props.playlists.slice(currOffset, currOffset+amountOfPlaylistsShown).map(playlist => (
         <div className="playlist" key={playlist.id}>
           <img
-            width={"35%"}
+            width={"80%"}
             src={playlist.images[0].url}
             alt={playlist.name}
             onClick={() => catchErrors(choosePlaylist(playlist.id))}
@@ -42,8 +44,14 @@ export default function PlaylistSelectionStep(props) {
   return (
     <div>
       <div className="playlists">{renderPlaylists()}</div>
-      {currOffset > 3 && <button onClick={() => setCurrOffset(curr => curr - 3)}>previous</button>}
-      {currOffset <= props.playlists.length - 3 && <button onClick={() => setCurrOffset(curr => curr + 3)}>next</button>}
+        {currOffset > amountOfPlaylistsShown && 
+          <button className="navButton" onClick={() => setCurrOffset(curr => curr - amountOfPlaylistsShown)}>
+            {"<"}
+          </button>}
+        {currOffset <= props.playlists.length - amountOfPlaylistsShown &&
+          <button className="navButton" onClick={() => setCurrOffset(curr => curr + amountOfPlaylistsShown)}>
+            {">"}
+          </button>}
     </div>
   );
 }

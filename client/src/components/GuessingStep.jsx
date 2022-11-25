@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 // import { catchErrors } from "../utils";
 // import KeyboardReact from "react-simple-keyboard";
 // import 'react-simple-keyboard/build/css/index.css';
@@ -45,8 +45,8 @@ export default function GuessingStep(props) {
     var randomIndex = Math.floor(Math.random() * currPlayableTracks.length);
     const randomTrack = currPlayableTracks[randomIndex].track;
     props.setTrack(randomTrack);
-    console.log(currPlayableTracks);
-    currPlayableTracks.splice(randomIndex, 1);
+    // console.log(currPlayableTracks);
+    // currPlayableTracks.splice(randomIndex, 1);
 
     const player = document.getElementById("player");
     player.src = randomTrack.preview_url;
@@ -109,13 +109,13 @@ export default function GuessingStep(props) {
     if (player.src.includes("mp3")) {
       if (player.paused) {
         player.play();
-        console.log("playing");
+        // console.log("playing");
         audioButton.classList.remove("play-button");
         audioButton.classList.add("pause-button");
         // playerButton.innerHTML = pauseIcon;
       } else {
         player.pause();
-        console.log("paused");
+        // console.log("paused");
         audioButton.classList.remove("pause-button");
         audioButton.classList.add("play-button");
         // playerButton.innerHTML = playIcon;
