@@ -26,6 +26,7 @@ export default function App() {
   */
 
   const [token, setToken] = useState(null);
+  const [playlistsData, setPlaylistsData] = useState(null);
   const [playlists, setPlaylists] = useState(null);
   const [chosenPlaylist, setChosenPlaylist] = useState(null);
   const [tracks, setTracks] = useState(null);
@@ -47,11 +48,39 @@ export default function App() {
   
       const res = await fetch(`${BASE_URL}/me/playlists?`+ params, OPTIONS);
       const playlists = await res.json();
-      setPlaylists(playlists.items);
+      // setPlaylists(playlists.items);
+      setPlaylistsData(playlists);
     }
 
     accessToken && catchErrors(getUserPlaylists());
   }, [])
+
+  useEffect(() => {
+    if (!playlistsData) {
+      return;
+    }
+
+    async function fetchMorePlaylists() {
+      if (playlistsData.next) {
+        const res = await fetch(playlistsData.next, OPTIONS);
+        const playlists = await res.json();
+        setPlaylistsData(playlists);
+      }
+    }
+
+    setPlaylists(playlists => ([
+      ...playlists ? playlists : [],
+      ...playlistsData.items
+    ]));
+
+    console.log(typeof(playlistsData), typeof(playlistsData.items))
+    
+    catchErrors(fetchMorePlaylists());
+    // console.log(playlistsData.next);
+
+  }, [playlistsData])
+
+  console.log("amount of playlists:", playlists && playlists.length);
 
   // maybe do this instead:
   // const [state, setState] = {
@@ -86,6 +115,7 @@ export default function App() {
             token={token}
           />
         }
+        <h4 style={{color: 'red'}}>Pro tip: Always refresh the page to see if an update is really working</h4>
         <hr />
        </header>
 
