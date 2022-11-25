@@ -8,8 +8,9 @@ import { useState } from "react";
 export default function GuessingStep(props) {
   
   var chosenPlaylistTrackNames = [];
+  // console.log("length:", chosenPlaylistTrackNames.length);
   // console.log("chosen playlist: ", props.chosenPlaylist);
-  if (props.chosenPlaylist) {
+  /* if (props.chosenPlaylist) {
     // chosenPlaylistTrackNames = [];
     var chosenPlaylistTracks = props.chosenPlaylist.tracks.items;
     // console.log("the tracks: ", chosenPlaylistTracks);
@@ -18,10 +19,17 @@ export default function GuessingStep(props) {
       chosenPlaylistTrackNames.push(chosenPlaylistTracks[i].track.name);
     }
     // console.log(chosenPlaylistTrackNames);
-  }
+  } */
 
   var currPlayableTracks = props.tracks;
   // console.log(currPlayableTracks && currPlayableTracks.length);
+
+  if (currPlayableTracks) {
+    for (let i = 0; i < currPlayableTracks.length; i++) {
+      chosenPlaylistTrackNames.push(currPlayableTracks[i].track.name);
+    }
+    chosenPlaylistTrackNames = [...new Set(chosenPlaylistTrackNames)];
+  }
 
   const [hasStarted, setHasStarted] = useState(false);
   // const [guessSoFar, setGuessSoFar] = useState("");
@@ -43,8 +51,10 @@ export default function GuessingStep(props) {
     // error here where sometimes clicking doesn't fetch a song
     // poses problems when removing eligible items as we do here
     props.setGuess(null);
+    console.log(currPlayableTracks[0]);
     var randomIndex = Math.floor(Math.random() * currPlayableTracks.length);
     const randomTrack = currPlayableTracks[randomIndex].track;
+    console.log("answer:", randomTrack.name);
     props.setTrack(randomTrack);
     // currPlayableTracks.splice(randomIndex, 1);
 
@@ -141,7 +151,7 @@ export default function GuessingStep(props) {
               {/* onClick={() => toggleAudio} */}
             </div>
           </div>
-          <input type="text" id="guess" placeholder="Guess song title" onChange={showSuggestion} />
+          <input type="text" id="guess" placeholder="Guess song title" onKeyUp={showSuggestion} />
           <p id="suggestions"></p>
           <button onClick={checkAnswer}>Submit</button>
         </div>

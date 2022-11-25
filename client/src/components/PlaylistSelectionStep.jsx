@@ -18,7 +18,7 @@ export default function PlaylistSelectionStep(props) {
     const playlist = await res.json();
     
     props.setChosenPlaylist(playlist);
-    props.setTracks(playlist.tracks.items);
+    props.setTracks(playlist.tracks.items); // makes us get a 100 extra songs
     setTracksData(playlist.tracks);
 
     // props.setCurrentStep(2); // wrap in conditional
@@ -26,7 +26,7 @@ export default function PlaylistSelectionStep(props) {
 
   useEffect(() => {
     const n_fetchCycles = tracksData ? Math.ceil(tracksData.total / 100) : 10;
-    console.log(currFetchCycle.current, n_fetchCycles, currFetchCycle === n_fetchCycles);
+    // console.log(currFetchCycle.current, n_fetchCycles, currFetchCycle === n_fetchCycles);
     if (currFetchCycle.current % n_fetchCycles === 0) {
       currFetchCycle.current = 0;
       props.setCurrentStep(2);
