@@ -73,11 +73,6 @@ h5 {
   width: 300px;
 }
 
-.navButton {
-  margin-left: 5px;
-  border-radius: 50%;
-}
-
 .simple-keyboard {
   font-size: 10px;
 }
@@ -97,6 +92,7 @@ h5 {
   height: 100px;
   background-repeat: no-repeat;
   background-size: 80px;
+  background-position: center;
   cursor: pointer;
 }
 

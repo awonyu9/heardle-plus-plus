@@ -33,6 +33,9 @@ export default function App() {
   const [currentQuizTrack, setCurrentQuizTrack] = useState(null);
   const [currentUserGuess, setCurrentUserGuess] = useState(null);
   const [isGuessCorrect, setIsGuessCorrect] = useState(false);
+  const [visitedPlaylists, setVisitedPlaylists] = useState({});
+
+  // console.log(visitedPlaylists);
 
   useEffect(() => {
 
@@ -128,6 +131,8 @@ export default function App() {
             setChosenPlaylist={setChosenPlaylist}
             setTracks={setTracks}
             playlists={playlists}
+            visitedPlaylists={visitedPlaylists}
+            setVisitedPlaylists={setVisitedPlaylists}
           />
         }
 

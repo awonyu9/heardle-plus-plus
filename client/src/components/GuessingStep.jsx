@@ -21,6 +21,7 @@ export default function GuessingStep(props) {
   }
 
   var currPlayableTracks = props.tracks;
+  // console.log(currPlayableTracks && currPlayableTracks.length);
 
   const [hasStarted, setHasStarted] = useState(false);
   // const [guessSoFar, setGuessSoFar] = useState("");
@@ -45,7 +46,6 @@ export default function GuessingStep(props) {
     var randomIndex = Math.floor(Math.random() * currPlayableTracks.length);
     const randomTrack = currPlayableTracks[randomIndex].track;
     props.setTrack(randomTrack);
-    // console.log(currPlayableTracks);
     // currPlayableTracks.splice(randomIndex, 1);
 
     const player = document.getElementById("player");
@@ -141,8 +141,8 @@ export default function GuessingStep(props) {
               {/* onClick={() => toggleAudio} */}
             </div>
           </div>
-          <input type="text" id="guess" placeholder="Guess track name" onChange={showSuggestion} />
-          <p id="suggestions">suggestions placeholder</p>
+          <input type="text" id="guess" placeholder="Guess song title" onChange={showSuggestion} />
+          <p id="suggestions"></p>
           <button onClick={checkAnswer}>Submit</button>
         </div>
       }
