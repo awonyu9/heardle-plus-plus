@@ -60,7 +60,7 @@ export default function App() {
 
       var allPlaylists = []; // have to rename some of this
 
-      var offset = 0
+      var offset = 1
       const n_cycles = Math.ceil(total / 20);
       for (let i = 0; i < n_cycles; i++) {
         var response = await fetch(`${BASE_URL}/me/playlists?offset=${offset}`, OPTIONS);
@@ -74,7 +74,7 @@ export default function App() {
     }
 
     accessToken && catchErrors(getallPlaylists());
-    console.log(playlists);
+    // console.log(playlists);
   }, [])
 
   // useEffect(() => {
@@ -129,7 +129,7 @@ export default function App() {
   return (
     <div className="App">
        <header className="App-header">
-        <h1>Quizify (Heardle++)</h1>
+        <h1>Heardle++ (working title)</h1>
         {currentStep >= 1 &&
           <LoginStep
             currentStep={currentStep}

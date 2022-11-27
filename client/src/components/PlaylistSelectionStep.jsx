@@ -13,12 +13,12 @@ export default function PlaylistSelectionStep(props) {
 
   // const amountOfPlaylistsShown = 4;
   
-  async function choosePlaylist(playlistId) {
+  async function choosePlaylist(playlistId) { // this is probably where we wanna save visited playlists
     const res = await fetch(`${BASE_URL}/playlists/${playlistId}`, OPTIONS);
     const playlist = await res.json();
     
     props.setChosenPlaylist(playlist);
-    props.setTracks(playlist.tracks.items); // makes us get a 100 extra songs
+    props.setTracks(playlist.tracks.items); // makes us get a 100 extra songs, leave it for demo
     setTracksData(playlist.tracks);
 
     // props.setCurrentStep(2); // wrap in conditional
@@ -68,10 +68,10 @@ export default function PlaylistSelectionStep(props) {
     return null;
   }
 
-  function renderPlaylists() {
+  function renderPlaylists() { // move this back to a one-step return
     if (props.playlists) {
-      var renderedPlaylists = props.playlists.map((playlist, i) => (
-        <div className="playlist" key={i}> 
+      var renderedPlaylists = props.playlists.map((playlist) => (
+        <div className="playlist" key={playlist.id}> 
         {/* should be <div className="playlist" key={playlist.id}> once I fix duplicate problem */}
           <img
             width={"80%"}

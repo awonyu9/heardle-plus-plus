@@ -16,7 +16,7 @@
   text-align: center;
 }
 
-a, button, img { /* quick fix but no good */
+a, button, img, .autosuggestion { /* quick fix but no good */
   cursor: pointer;
 }
 
@@ -102,4 +102,16 @@ h5 {
 
 .pause-button {
   background-image: url("./icons/pause-button.png");
+}
+
+.autosuggest_wrapper {
+
+}
+
+.suggestionList_scrollable {
+
+}
+
+.autosuggestion {
+  
 }

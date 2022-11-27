@@ -6,6 +6,8 @@ import { useState } from "react";
 // import Player from './Player';
 
 export default function GuessingStep(props) {
+
+  const [suggestions, setSuggestions] = useState([]);
   
   var chosenPlaylistTrackNames = [];
   // console.log("length:", chosenPlaylistTrackNames.length);
@@ -22,7 +24,8 @@ export default function GuessingStep(props) {
   } */
 
   var currPlayableTracks = props.tracks;
-  console.log(currPlayableTracks && currPlayableTracks.length);
+  // console.log(currPlayableTracks && currPlayableTracks.length);
+  // console.log(props.tracks && props.tracks.length);
 
   if (currPlayableTracks) {
     for (let i = 0; i < currPlayableTracks.length; i++) {
@@ -51,6 +54,7 @@ export default function GuessingStep(props) {
     // error here where sometimes clicking doesn't fetch a song
     // poses problems when removing eligible items as we do here
     props.setGuess(null);
+    setSuggestions([]);
     // console.log(currPlayableTracks[0]);
     var randomIndex = Math.floor(Math.random() * currPlayableTracks.length);
     const randomTrack = currPlayableTracks[randomIndex].track;
@@ -110,7 +114,24 @@ export default function GuessingStep(props) {
         suggestions.push(chosenPlaylistTrackNames[i]);
       }
     }
-    document.getElementById("suggestions").innerHTML = suggestions.join(", ");
+    
+    setSuggestions(suggestions);
+    // document.getElementById("suggestions").innerHTML = suggestions.join(", ");
+  }
+
+  function renderSuggestions() {
+    if (suggestions) {
+      return suggestions.map((suggestion, i) => (
+        <li
+          key={i}
+          className="autosuggestion"
+          onClick={() => document.getElementById("guess").value = suggestion}
+        >
+          {suggestion}
+        </li>
+        
+      ))
+    }
   }
 
   function toggleAudio() {
@@ -151,8 +172,11 @@ export default function GuessingStep(props) {
               {/* onClick={() => toggleAudio} */}
             </div>
           </div>
-          <input type="text" id="guess" placeholder="Guess song title" onKeyUp={showSuggestion} />
-          <p id="suggestions"></p>
+
+          <div className="autosuggest_wrapper">
+            <input type="text" id="guess" placeholder="Guess song title" onKeyUp={showSuggestion} />
+            <div className="suggestionList_scrollable"><ul>{renderSuggestions()}</ul></div>
+          </div>
           <button onClick={checkAnswer}>Submit</button>
         </div>
       }
