@@ -1,17 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-// import { getPlaylist } from '../spotify';
 import { catchErrors } from '../utils';
-// import Playlists from './Playlists';
 import { BASE_URL, OPTIONS } from "../spotify";
 
 export default function PlaylistSelectionStep(props) {
   // const [currOffset, setCurrOffset] = useState(1);
   const [tracksData, setTracksData] = useState(null);
-  // var currFetchCycle = 1;
+  const [loading, setLoading] = useState(false);
   const currFetchCycle = useRef(1);
-  // console.log(fetchCycles);
-
-  // const amountOfPlaylistsShown = 4;
   
   async function choosePlaylist(playlistId) { // this is probably where we wanna save visited playlists
     const res = await fetch(`${BASE_URL}/playlists/${playlistId}`, OPTIONS);
@@ -29,6 +24,7 @@ export default function PlaylistSelectionStep(props) {
     // console.log(currFetchCycle.current, n_fetchCycles, currFetchCycle === n_fetchCycles);
     if (currFetchCycle.current % n_fetchCycles === 0) {
       currFetchCycle.current = 0;
+      setLoading(false);
       props.setCurrentStep(2);
     }
     if (!tracksData) {
@@ -43,6 +39,7 @@ export default function PlaylistSelectionStep(props) {
 
     async function fetchMoreTracks() {
       if (tracksData.next) {
+        setLoading(true);
         const res = await fetch(tracksData.next, OPTIONS);
         const playlist = await res.json();
         setTracksData(playlist);
@@ -89,15 +86,14 @@ export default function PlaylistSelectionStep(props) {
 
   return (
     <div>
-      <div className="playlists">{renderPlaylists()}</div>
-        {/* {currOffset > amountOfPlaylistsShown && 
-          <button className="navButton" onClick={() => setCurrOffset(curr => curr - amountOfPlaylistsShown)}>
-            {"<"}
-          </button>}
-        {currOffset <= props.playlists.length - amountOfPlaylistsShown &&
-          <button className="navButton" onClick={() => setCurrOffset(curr => curr + amountOfPlaylistsShown)}>
-            {">"}
-          </button>} */}
+      {
+        loading ?
+        <div>
+          <div class="loading-icon"></div>
+          <p>Fetching tracks...</p>
+        </div>
+        : <div className="playlists">{renderPlaylists()}</div>
+      }
     </div>
   );
 }

@@ -174,8 +174,14 @@ export default function GuessingStep(props) {
           </div>
 
           <div className="autosuggest_wrapper">
-            <input type="text" id="guess" placeholder="Guess song title" onKeyUp={showSuggestion} />
-            <div className="suggestionList_scrollable"><ul>{renderSuggestions()}</ul></div>
+            <input
+              type="text"
+              id="guess"
+              className="userGuess"
+              placeholder="Guess song title"
+              onKeyUp={showSuggestion}
+            />
+            <ul className="suggestionList_scrollable">{renderSuggestions()}</ul>
           </div>
           <button onClick={checkAnswer}>Submit</button>
         </div>
