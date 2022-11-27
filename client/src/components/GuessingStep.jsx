@@ -51,7 +51,7 @@ export default function GuessingStep(props) {
     // error here where sometimes clicking doesn't fetch a song
     // poses problems when removing eligible items as we do here
     props.setGuess(null);
-    console.log(currPlayableTracks[0]);
+    // console.log(currPlayableTracks[0]);
     var randomIndex = Math.floor(Math.random() * currPlayableTracks.length);
     const randomTrack = currPlayableTracks[randomIndex].track;
     console.log("answer:", randomTrack.name);

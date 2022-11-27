@@ -41,7 +41,7 @@ export default function App() {
 
     setToken(accessToken);
 
-    async function getUserPlaylists() {
+    async function getallPlaylists() {
       const params = new URLSearchParams({
         // limit: 3,
         // offset: 1,
@@ -50,16 +50,15 @@ export default function App() {
       // const offset = 1;
   
       const res = await fetch(`${BASE_URL}/me/playlists?`+ params, OPTIONS);
-      const playlists = await res.json();
+      const playlistsData = await res.json();
       // setPlaylists(playlists.items);
       // setPlaylistsData(playlists);
 
       // console.log(playlists.items);
 
-      const total = playlists.total;
-      console.log(total, playlists.next);
+      const total = playlistsData.total;
 
-      var userPlaylists = []; // have to rename some of this
+      var allPlaylists = []; // have to rename some of this
 
       var offset = 0
       const n_cycles = Math.ceil(total / 20);
@@ -67,15 +66,14 @@ export default function App() {
         var response = await fetch(`${BASE_URL}/me/playlists?offset=${offset}`, OPTIONS);
         var morePlaylists = await response.json();
         // console.log("more:", morePlaylists.items);
-        userPlaylists.push(morePlaylists.items);
+        allPlaylists.push(morePlaylists.items);
         offset += 20;
       }
-      var allPlaylists = userPlaylists[0].concat(...userPlaylists.slice(1));
-      setPlaylists(allPlaylists);
+      setPlaylists(allPlaylists[0].concat(...allPlaylists.slice(1)));
 
     }
 
-    accessToken && catchErrors(getUserPlaylists());
+    accessToken && catchErrors(getallPlaylists());
     console.log(playlists);
   }, [])
 
