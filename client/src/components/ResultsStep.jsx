@@ -25,7 +25,12 @@ export default function ResultsStep(props) {
           {props.currentQuizTrack.name} by {props.currentQuizTrack.artists[0].name} ({props.currentQuizTrack.album.release_date.slice(0, 4)})
         </a>
       </h5>
-      <h5>From the playlist: {props.chosenPlaylist.name}</h5>
+      <h5>
+        From the playlist: 
+        <a href={props.chosenPlaylist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+          {props.chosenPlaylist.name}
+        </a>
+      </h5>
 
       <button onClick={() => props.setCurrentStep(1)}>Play with another playlist</button>
       <button onClick={() => props.setCurrentStep(2)}>Play with same playlist</button>

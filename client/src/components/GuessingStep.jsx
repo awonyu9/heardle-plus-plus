@@ -22,7 +22,7 @@ export default function GuessingStep(props) {
   } */
 
   var currPlayableTracks = props.tracks;
-  // console.log(currPlayableTracks && currPlayableTracks.length);
+  console.log(currPlayableTracks && currPlayableTracks.length);
 
   if (currPlayableTracks) {
     for (let i = 0; i < currPlayableTracks.length; i++) {
