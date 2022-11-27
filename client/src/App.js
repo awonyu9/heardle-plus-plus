@@ -52,36 +52,57 @@ export default function App() {
       const res = await fetch(`${BASE_URL}/me/playlists?`+ params, OPTIONS);
       const playlists = await res.json();
       // setPlaylists(playlists.items);
-      setPlaylistsData(playlists);
+      // setPlaylistsData(playlists);
+
+      // console.log(playlists.items);
+
+      const total = playlists.total;
+      console.log(total, playlists.next);
+
+      var userPlaylists = []; // have to rename some of this
+
+      var offset = 0
+      const n_cycles = Math.ceil(total / 20);
+      for (let i = 0; i < n_cycles; i++) {
+        var response = await fetch(`${BASE_URL}/me/playlists?offset=${offset}`, OPTIONS);
+        var morePlaylists = await response.json();
+        // console.log("more:", morePlaylists.items);
+        userPlaylists.push(morePlaylists.items);
+        offset += 20;
+      }
+      var allPlaylists = userPlaylists[0].concat(...userPlaylists.slice(1));
+      setPlaylists(allPlaylists);
+
     }
 
     accessToken && catchErrors(getUserPlaylists());
+    console.log(playlists);
   }, [])
 
-  useEffect(() => {
-    if (!playlistsData) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (!playlistsData) {
+  //     return;
+  //   }
 
-    async function fetchMorePlaylists() {
-      if (playlistsData.next) {
-        const res = await fetch(playlistsData.next, OPTIONS);
-        const playlists = await res.json();
-        setPlaylistsData(playlists);
-      }
-    }
+  //   async function fetchMorePlaylists() {
+  //     if (playlistsData.next) {
+  //       const res = await fetch(playlistsData.next, OPTIONS);
+  //       const playlists = await res.json();
+  //       setPlaylistsData(playlists);
+  //     }
+  //   }
 
-    setPlaylists(playlists => ([
-      ...playlists ? playlists : [],
-      ...playlistsData.items
-    ]));
+  //   setPlaylists(playlists => ([
+  //     ...playlists ? playlists : [],
+  //     ...playlistsData.items
+  //   ]));
 
-    // console.log(typeof(playlistsData), typeof(playlistsData.items))
+  //   // console.log(typeof(playlistsData), typeof(playlistsData.items))
     
-    catchErrors(fetchMorePlaylists());
-    // console.log(playlistsData.next);
+  //   catchErrors(fetchMorePlaylists());
+  //   // console.log(playlistsData.next);
 
-  }, [playlistsData])
+  // }, [playlistsData])
 
   // console.log("amount of playlists:", playlists && playlists.length);
 
