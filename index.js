@@ -3,11 +3,13 @@ const express = require('express');
 const fetch = (...args) =>
 	import('node-fetch').then(({default: fetch}) => fetch(...args));
 const router = express();
+const crypto = require('crypto')
 const port = 8888;
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
+const VERIFIER = base64URLEncode(crypto.randomBytes(32));
 
 router.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:3000');
@@ -27,11 +29,25 @@ function generateRandomString(length) {
   return text;
 }
 
+function base64URLEncode(str) {
+  return str.toString('base64')
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=/g, '');
+}
+
+function sha256(buffer) {
+  return crypto.createHash('sha256').update(buffer).digest();
+}
+
 const stateKey = 'spotify_auth_state';
 
 router.get('/login', (req, res) => {
   const state = generateRandomString(16);
   res.cookie(stateKey, state);
+
+  // var verifier = base64URLEncode(crypto.randomBytes(32)); 
+  var code_challenge = base64URLEncode(sha256(VERIFIER));
 
   const scope = [
     'user-read-private',
@@ -44,6 +60,9 @@ router.get('/login', (req, res) => {
     redirect_uri: REDIRECT_URI,
     state: state,
     scope: scope,
+    // show_dialog: true,
+    // code_challenge_method: 'S256',
+    // code_challenge: code_challenge, 
   }).toString();
   
   res.redirect(`https://accounts.spotify.com/authorize?${params}`);
@@ -66,6 +85,8 @@ router.get('/callback', async (req, res) => {
         grant_type: 'authorization_code',
         code: code,
         redirect_uri: REDIRECT_URI,
+        // client_id: CLIENT_ID,
+        // code_verifier: VERIFIER,
       }).toString(),
     });
 
@@ -112,6 +133,7 @@ router.get('/refresh_token', async (req, res) => {
       body: new URLSearchParams({
         grant_type: 'refresh_token',
         refresh_token: refresh_token,
+        // client_id: CLIENT_ID,
       }).toString(),
     });
 

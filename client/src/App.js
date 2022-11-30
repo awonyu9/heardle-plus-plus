@@ -19,14 +19,13 @@ import {
 export default function App() {
   const [currentStep, setCurrentStep] = useState(1);
   /* 
-  1. login
-  2. playlist selection
-  3. guessing phase
-  4. results page
+  0. login
+  1. playlist selection
+  2. guessing phase
+  3. results page
   */
 
   const [token, setToken] = useState(null);
-  const [playlistsData, setPlaylistsData] = useState(null);
   const [playlists, setPlaylists] = useState(null);
   const [chosenPlaylist, setChosenPlaylist] = useState(null);
   const [tracks, setTracks] = useState(null);
@@ -60,7 +59,7 @@ export default function App() {
 
       var allPlaylists = []; // have to rename some of this
 
-      var offset = 1
+      var offset = 0
       const n_cycles = Math.ceil(total / 20);
       for (let i = 0; i < n_cycles; i++) {
         var response = await fetch(`${BASE_URL}/me/playlists?offset=${offset}`, OPTIONS);
