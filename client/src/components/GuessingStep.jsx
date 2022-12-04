@@ -9,6 +9,7 @@ import { useState } from "react";
 export default function GuessingStep(props) {
 
   const [suggestions, setSuggestions] = useState([]);
+  const songAmount = 3;
   
   var chosenPlaylistTrackNames = [];
 
@@ -56,7 +57,7 @@ export default function GuessingStep(props) {
     // currPlayableTracks.splice(randomIndex, 1);
 
     // const player = document.getElementById("player");
-    player.src = randomTrack.preview_url + "#t=0,3"; // START HERE
+    player.src = randomTrack.preview_url + `#t=0,${songAmount}`; // START HERE
     player.volume = 0.3;
     // player.preload = "auto"; // AND HERE
 
@@ -120,19 +121,35 @@ export default function GuessingStep(props) {
     // const player = document.getElementById("player");
     const audioButton = document.querySelector(".audio-button");
     if (player.src.includes("mp3")) {
-      if (player.paused) {
-        player.play();
-        // console.log("playing");
-        audioButton.classList.remove("play-button");
-        audioButton.classList.add("pause-button");
-        // playerButton.innerHTML = pauseIcon;
-      } else {
+      player.play();
+      audioButton.classList.remove("play-button");
+      audioButton.classList.add("pause-button");
+      setTimeout(() => {
         player.pause();
-        // console.log("paused");
         audioButton.classList.remove("pause-button");
         audioButton.classList.add("play-button");
-        // playerButton.innerHTML = playIcon;
-      }
+      }, songAmount*1000)
+      player.currentTime = 0;
+      
+      // if (player.paused) {
+      //   player.play();
+      //   // console.log("playing");
+      //   audioButton.classList.remove("play-button");
+      //   audioButton.classList.add("pause-button");
+      //   setInterval(() => { // START HERE, need to rethink this logic
+      //     player.pause();
+      //     player.currentTime = 0;
+      //     audioButton.classList.remove("pause-button");
+      //     audioButton.classList.add("play-button");
+      //   }, 3000)
+      //   // playerButton.innerHTML = pauseIcon;
+      // } else {
+      //   player.pause();
+      //   // console.log("paused");
+      //   audioButton.classList.remove("pause-button");
+      //   audioButton.classList.add("play-button");
+      //   // playerButton.innerHTML = playIcon;
+      // }
     } else {
       pickRandomSong();
     }
