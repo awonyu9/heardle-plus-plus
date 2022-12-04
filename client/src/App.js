@@ -34,6 +34,9 @@ export default function App() {
   const [isGuessCorrect, setIsGuessCorrect] = useState(false);
   const [visitedPlaylists, setVisitedPlaylists] = useState({});
 
+  const player = document.getElementById("player");
+  // player.volume = 0.3;
+
   // console.log(visitedPlaylists);
 
   useEffect(() => {
@@ -164,6 +167,7 @@ export default function App() {
             setIsGuessCorrect={setIsGuessCorrect}
             chosenPlaylist={chosenPlaylist}
             tracks={tracks}
+            player={player}
           />
         }
 
@@ -176,6 +180,8 @@ export default function App() {
             chosenPlaylist={chosenPlaylist}
           />
         }
+
+        <audio id="player" preload="auto"></audio>
       
     </div>
   );

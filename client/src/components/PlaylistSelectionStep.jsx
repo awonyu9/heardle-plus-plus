@@ -89,7 +89,7 @@ export default function PlaylistSelectionStep(props) {
       {
         loading ?
         <div>
-          <div class="loading-icon"></div>
+          <div className="loading-icon"></div>
           <p>Fetching tracks...</p>
         </div>
         : <div className="playlists">{renderPlaylists()}</div>

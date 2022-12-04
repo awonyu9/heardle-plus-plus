@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useState } from "react";
 // import { catchErrors } from "../utils";
 // import KeyboardReact from "react-simple-keyboard";
@@ -10,22 +11,13 @@ export default function GuessingStep(props) {
   const [suggestions, setSuggestions] = useState([]);
   
   var chosenPlaylistTrackNames = [];
-  // console.log("length:", chosenPlaylistTrackNames.length);
-  // console.log("chosen playlist: ", props.chosenPlaylist);
-  /* if (props.chosenPlaylist) {
-    // chosenPlaylistTrackNames = [];
-    var chosenPlaylistTracks = props.chosenPlaylist.tracks.items;
-    // console.log("the tracks: ", chosenPlaylistTracks);
-    for (let i = 0; i < chosenPlaylistTracks.length; i++) {
-      // console.log("a track:", chosenPlaylistTracks[i].track.name);
-      chosenPlaylistTrackNames.push(chosenPlaylistTracks[i].track.name);
-    }
-    // console.log(chosenPlaylistTrackNames);
-  } */
+
+  // const player = document.getElementById("player");
+  const player = props.player;
+  // console.log(player);
+  
 
   var currPlayableTracks = props.tracks;
-  // console.log(currPlayableTracks && currPlayableTracks.length);
-  // console.log(props.tracks && props.tracks.length);
 
   if (currPlayableTracks) {
     for (let i = 0; i < currPlayableTracks.length; i++) {
@@ -35,9 +27,10 @@ export default function GuessingStep(props) {
   }
 
   const [hasStarted, setHasStarted] = useState(false);
-  // const [guessSoFar, setGuessSoFar] = useState("");
-  
-  // const currTrackLength = 3.0;
+
+  useEffect(() => {
+    console.log(player.paused ? "paused" : "playing");
+  }, [player])
 
   if (props.currentStep !== 2) {
     return null;
@@ -62,10 +55,10 @@ export default function GuessingStep(props) {
     props.setTrack(randomTrack);
     // currPlayableTracks.splice(randomIndex, 1);
 
-    const player = document.getElementById("player");
-    player.src = randomTrack.preview_url;
+    // const player = document.getElementById("player");
+    player.src = randomTrack.preview_url + "#t=0,3"; // START HERE
     player.volume = 0.3;
-
+    // player.preload = "auto"; // AND HERE
 
     // const player = document.getElementById("player");
     // console.log(player.src, player.srcObject);
@@ -90,17 +83,6 @@ export default function GuessingStep(props) {
     props.setCurrentStep(3);
   }
 
-  // async function showSuggestion(event) {
-  //   var str = event.target.value;
-  //   const suggestionBox = document.getElementById("suggestion");
-  //   if (str === "") {
-  //     suggestionBox.innerHTML = "";
-  //   } else {
-  //     const data = await fetch("http://127.0.0.1:80/Aburg/track_suggestions.php?q="+str);
-  //     const res = await data.json();
-  //     suggestionBox.innerHTML = res;
-  //   }
-  // }
 
   function showSuggestion(event) {
     // setGuessSoFar(event.target.value);
@@ -135,7 +117,7 @@ export default function GuessingStep(props) {
   }
 
   function toggleAudio() {
-    const player = document.getElementById("player");
+    // const player = document.getElementById("player");
     const audioButton = document.querySelector(".audio-button");
     if (player.src.includes("mp3")) {
       if (player.paused) {
@@ -187,7 +169,9 @@ export default function GuessingStep(props) {
         </div>
       }
       
-      <div className="player"><audio id="player"></audio></div>
+      <div className="player">
+        <audio id="player"></audio>
+      </div>
     </div>
   );
 }
