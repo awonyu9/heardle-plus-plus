@@ -9,7 +9,7 @@ import { useState } from "react";
 export default function GuessingStep(props) {
 
   const [suggestions, setSuggestions] = useState([]);
-  const songAmount = 3;
+  const trackAvailableSeconds = 3;
   
   var chosenPlaylistTrackNames = [];
 
@@ -29,9 +29,9 @@ export default function GuessingStep(props) {
 
   const [hasStarted, setHasStarted] = useState(false);
 
-  useEffect(() => {
-    console.log(player.paused ? "paused" : "playing");
-  }, [player])
+  // useEffect(() => {
+  //   console.log(player.paused ? "paused" : "playing");
+  // }, [player])
 
   if (props.currentStep !== 2) {
     return null;
@@ -57,7 +57,7 @@ export default function GuessingStep(props) {
     // currPlayableTracks.splice(randomIndex, 1);
 
     // const player = document.getElementById("player");
-    player.src = randomTrack.preview_url + `#t=0,${songAmount}`; // START HERE
+    player.src = randomTrack.preview_url + `#t=0,${trackAvailableSeconds}`; // START HERE
     player.volume = 0.3;
     // player.preload = "auto"; // AND HERE
 
@@ -121,15 +121,17 @@ export default function GuessingStep(props) {
     // const player = document.getElementById("player");
     const audioButton = document.querySelector(".audio-button");
     if (player.src.includes("mp3")) {
-      player.play();
-      audioButton.classList.remove("play-button");
-      audioButton.classList.add("pause-button");
-      setTimeout(() => {
-        player.pause();
-        audioButton.classList.remove("pause-button");
-        audioButton.classList.add("play-button");
-      }, songAmount*1000)
-      player.currentTime = 0;
+      if (player.paused) {
+        player.play();
+        audioButton.classList.remove("play-button");
+        audioButton.classList.add("pause-button");
+        setTimeout(() => {
+          player.pause();
+          audioButton.classList.remove("pause-button");
+          audioButton.classList.add("play-button");
+          player.currentTime = 0;
+        }, trackAvailableSeconds*1000)
+      }
       
       // if (player.paused) {
       //   player.play();
