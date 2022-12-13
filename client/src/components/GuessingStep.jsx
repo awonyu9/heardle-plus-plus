@@ -134,10 +134,12 @@ export default function GuessingStep(props) {
         player.play();
         audioButton.classList.remove("play-button");
         audioButton.classList.add("pause-button");
+        audioButton.style.cursor = "default";
         setTimeout(() => {
           player.pause();
           audioButton.classList.remove("pause-button");
           audioButton.classList.add("play-button");
+          audioButton.style.cursor = "pointer";
           player.currentTime = 0;
         }, trackAvailableSeconds*1000)
       }

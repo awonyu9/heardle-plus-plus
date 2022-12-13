@@ -1,5 +1,3 @@
-
-
 export default function ResultsStep(props) {
   if (props.currentStep !== 3) {
     return null;

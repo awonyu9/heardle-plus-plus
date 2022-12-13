@@ -152,7 +152,7 @@ h5 {
   height: 500px;
   top: 25%;
   left: 35%;
-  background-color: rgb(0, 0 ,0 , 0.5);
+  background-color: rgb(0, 0 ,0 , 0.75);
   z-index: 2;
   cursor: pointer;
 }
