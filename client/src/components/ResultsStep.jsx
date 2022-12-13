@@ -8,6 +8,8 @@ export default function ResultsStep(props) {
   // console.log(props.chosenPlaylist);
   // console.log(props.currentQuizTrack);
 
+  var artistNames = props.currentQuizTrack.artists.map(a => a.name).join(", ");
+
   return (
     <div>
       <h3>Results</h3>
@@ -22,7 +24,7 @@ export default function ResultsStep(props) {
       <h5>
         Correct answer: 
         <a href={props.currentQuizTrack.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-          {props.currentQuizTrack.name} by {props.currentQuizTrack.artists[0].name} ({props.currentQuizTrack.album.release_date.slice(0, 4)})
+          {props.currentQuizTrack.name} by {artistNames} ({props.currentQuizTrack.album.release_date.slice(0, 4)})
         </a>
       </h5>
       <h5>
@@ -34,7 +36,7 @@ export default function ResultsStep(props) {
 
       <button onClick={() => props.setCurrentStep(1)}>Play with another playlist</button>
       <button onClick={() => props.setCurrentStep(2)}>Play with same playlist</button>
-      <button>See stats</button>
+      <button onClick={() => console.log(props.score)}>See stats</button>
 
     </div>
   );

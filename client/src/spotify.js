@@ -133,16 +133,16 @@ export async function getCurrentUserProfile() {
   return res.json();
 }
 
-export async function getUserPlaylists(limit=10, offset=0) {
+/* export async function getUserPlaylists(limit=10, offset=0) {
   const res = await fetch(`${BASE_URL}/me/playlists?limit=${limit}&offset=${offset}`, OPTIONS);
   const data = await res.json();
   return data;
-}
+} */
 
-export async function getPlaylist(playlist_id="37i9dQZF1EVJSvZp5AOML2") {
+/* export async function getPlaylist(playlist_id="37i9dQZF1EVJSvZp5AOML2") {
   const res = await fetch(`${BASE_URL}/playlists/${playlist_id}`, OPTIONS);
   return res.json();
-}
+} */
 
 // export function getRandomTrack(tracks) {
 //   const

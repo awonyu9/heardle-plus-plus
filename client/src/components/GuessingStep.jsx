@@ -51,13 +51,19 @@ export default function GuessingStep(props) {
     setSuggestions([]);
     // console.log(currPlayableTracks[0]);
     var randomIndex = Math.floor(Math.random() * currPlayableTracks.length);
+    
     const randomTrack = currPlayableTracks[randomIndex].track;
     console.log("answer:", randomTrack.name);
     props.setTrack(randomTrack);
     // currPlayableTracks.splice(randomIndex, 1);
+    // console.log(randomTrack.preview_url);
+    player.oncanplaythrough = (e) => { // START HERE
+      // console.log("ready");
+    }
 
     // const player = document.getElementById("player");
     player.src = randomTrack.preview_url + `#t=0,${trackAvailableSeconds}`; // START HERE
+    
     player.volume = 0.3;
     // player.preload = "auto"; // AND HERE
 
@@ -80,6 +86,9 @@ export default function GuessingStep(props) {
     props.setGuess(userGuess ? userGuess : " ");
     // props.setGuess(userGuess);
     props.setIsGuessCorrect(userGuess === correctAnswer);
+    if (userGuess === correctAnswer) {
+      props.setScore(prev => prev + 1);
+    }
     setHasStarted(false);
     props.setCurrentStep(3);
   }
@@ -132,26 +141,6 @@ export default function GuessingStep(props) {
           player.currentTime = 0;
         }, trackAvailableSeconds*1000)
       }
-      
-      // if (player.paused) {
-      //   player.play();
-      //   // console.log("playing");
-      //   audioButton.classList.remove("play-button");
-      //   audioButton.classList.add("pause-button");
-      //   setInterval(() => { // START HERE, need to rethink this logic
-      //     player.pause();
-      //     player.currentTime = 0;
-      //     audioButton.classList.remove("pause-button");
-      //     audioButton.classList.add("play-button");
-      //   }, 3000)
-      //   // playerButton.innerHTML = pauseIcon;
-      // } else {
-      //   player.pause();
-      //   // console.log("paused");
-      //   audioButton.classList.remove("pause-button");
-      //   audioButton.classList.add("play-button");
-      //   // playerButton.innerHTML = playIcon;
-      // }
     } else {
       pickRandomSong();
     }

@@ -33,6 +33,7 @@ export default function App() {
   const [currentUserGuess, setCurrentUserGuess] = useState(null);
   const [isGuessCorrect, setIsGuessCorrect] = useState(false);
   const [visitedPlaylists, setVisitedPlaylists] = useState({});
+  const [score, setScore] = useState(0);
 
   const player = document.getElementById("player");
   // player.volume = 0.3;
@@ -78,6 +79,11 @@ export default function App() {
     accessToken && catchErrors(getallPlaylists());
     // console.log(playlists);
   }, [])
+
+  // useEffect(() => {
+  //   console.log("score:", score);
+
+  // }, [score])
 
   // useEffect(() => {
   //   if (!playlistsData) {
@@ -154,7 +160,7 @@ export default function App() {
           />
         }
         <button onClick={toggleTheme}>Toggle theme</button>
-        {/* <h4 style={{color: 'red'}}>Pro tip: Always refresh the page to see if an update is really working</h4> */}
+        <h4 style={{color: 'red'}}>Pro tip: Always refresh the page to see if an update is really working</h4>
         <hr />
        </header>
 
@@ -183,6 +189,7 @@ export default function App() {
             chosenPlaylist={chosenPlaylist}
             tracks={tracks}
             player={player}
+            setScore={setScore}
           />
         }
 
@@ -193,6 +200,7 @@ export default function App() {
             correctAnswer={isGuessCorrect}
             currentQuizTrack={currentQuizTrack}
             chosenPlaylist={chosenPlaylist}
+            score={score}
           />
         }
 
