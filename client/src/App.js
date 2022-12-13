@@ -134,7 +134,7 @@ export default function App() {
   //   console.log(":", );
   // }, [])
 
-  const themes = ["var(--heardle-plus-plus-pink)", "var(--heardle-plus-plus-green)", "goldenrod", "white"];
+  const themes = ["var(--heardle-plus-plus-pink)", "var(--heardle-plus-plus-green)", "goldenrod"];
 
   function toggleTheme() {
     var root = document.querySelector(":root");

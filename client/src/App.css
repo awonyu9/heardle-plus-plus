@@ -152,17 +152,18 @@ h5 {
   height: 500px;
   top: 25%;
   left: 35%;
-  background-color: rgb(0, 0 ,0 , 0.75);
+  background-color: rgba(255, 255, 255, 0.85);
   z-index: 2;
   cursor: pointer;
+  border-radius: 15%;
 }
 
 .overlay-text {
   position: absolute;
   top: 50%;
   left: 50%;
-  font-size: 50px;
-  color: white;
+  font-size: 3em;
+  /* color: white; */
   transform: translate(-50%,-50%);
   -ms-transform: translate(-50%,-50%);
 }
