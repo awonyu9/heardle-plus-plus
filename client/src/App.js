@@ -127,6 +127,20 @@ export default function App() {
   // useEffect(() => {
   //   console.log(":", );
   // }, [])
+
+  const themes = ["var(--heardle-plus-plus-pink)", "var(--heardle-plus-plus-green)", "goldenrod", "white"];
+
+  function toggleTheme() {
+    var root = document.querySelector(":root");
+    var currColor = root.style.backgroundColor;
+    // if (currColor === "var(--heardle-plus-plus-pink)") {
+    //   root.style.backgroundColor = "var(--heardle-plus-plus-green)";
+    // } else {
+    //   root.style.backgroundColor = "var(--heardle-plus-plus-pink)";
+    // }
+    var currIndex = themes.indexOf(currColor);
+    root.style.backgroundColor = themes[(currIndex+1) % themes.length];
+  }
   
   return (
     <div className="App">
@@ -139,7 +153,8 @@ export default function App() {
             token={token}
           />
         }
-        <h4 style={{color: 'red'}}>Pro tip: Always refresh the page to see if an update is really working</h4>
+        <button onClick={toggleTheme}>Toggle theme</button>
+        {/* <h4 style={{color: 'red'}}>Pro tip: Always refresh the page to see if an update is really working</h4> */}
         <hr />
        </header>
 

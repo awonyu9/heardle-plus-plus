@@ -10,9 +10,10 @@
 } */
 
 :root {
-  --quizify-pink: #FD7B7B;
-  /* background: linear-gradient(pink, var(--quizify-pink)); */
-  background-color: var(--quizify-pink);
+  --heardle-plus-plus-pink: #FD7B7B;
+  --heardle-plus-plus-green: rgb(53, 155, 53);
+  /* background: linear-gradient(pink, var(--heardle-plus-plus-pink)); */
+  background-color: var(--heardle-plus-plus-pink);
   text-align: center;
 }
 
