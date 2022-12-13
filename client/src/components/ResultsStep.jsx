@@ -9,6 +9,15 @@ export default function ResultsStep(props) {
   // console.log(props.currentQuizTrack);
 
   var artistNames = props.currentQuizTrack.artists.map(a => a.name).join(", ");
+  
+  function toggleOverlay() {
+    const overlay = document.getElementById("overlay");
+    if (overlay.style.display === "block") {
+      overlay.style.display = "none";
+    } else {
+      overlay.style.display = "block";
+    }
+  }
 
   return (
     <div>
@@ -36,7 +45,12 @@ export default function ResultsStep(props) {
 
       <button onClick={() => props.setCurrentStep(1)}>Play with another playlist</button>
       <button onClick={() => props.setCurrentStep(2)}>Play with same playlist</button>
-      <button onClick={() => console.log(props.score)}>See stats</button>
+      <button onClick={toggleOverlay}>See stats</button>
+      <div id="overlay" onClick={toggleOverlay}>
+        <div className="overlay-text">
+          Your current score is: {props.score}
+        </div>
+      </div>
 
     </div>
   );

@@ -144,3 +144,25 @@ h5 {
     transform: rotate(1turn);
   }
 }
+
+#overlay {
+  position: fixed;
+  display: none;
+  width: 500px;
+  height: 500px;
+  top: 25%;
+  left: 35%;
+  background-color: rgb(0, 0 ,0 , 0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
