@@ -1,23 +1,16 @@
-import { useEffect } from "react";
 import { useState } from "react";
-// import { catchErrors } from "../utils";
-// import KeyboardReact from "react-simple-keyboard";
-// import 'react-simple-keyboard/build/css/index.css';
-// import layout from "simple-keyboard-layouts/build/layouts/japanese";
-// import Player from './Player';
 
+/**
+ * Component that encloses the guessing phase of the game
+ * @param {Object} props 
+ * @returns {JSX.Element}
+ */
 export default function GuessingStep(props) {
-
   const [suggestions, setSuggestions] = useState([]);
+
   const trackAvailableSeconds = 3;
-  
-  var chosenPlaylistTrackNames = [];
-
-  // const player = document.getElementById("player");
   const player = props.player;
-  // console.log(player);
-  
-
+  var chosenPlaylistTrackNames = [];
   var currPlayableTracks = props.tracks;
 
   if (currPlayableTracks) {
@@ -29,88 +22,78 @@ export default function GuessingStep(props) {
 
   const [hasStarted, setHasStarted] = useState(false);
 
-  // useEffect(() => {
-  //   console.log(player.paused ? "paused" : "playing");
-  // }, [player])
-
   if (props.currentStep !== 2) {
     return null;
   }
 
-  // const keyboard = new KeyboardReact({
-  //   onChange: handleKeyboardPress,
-  //   ...layout,
-  // })
-
-  // console.log(props);
-
+  /**
+   * Generates a random number and indexes list of playlist tracks,
+   * sets currentTrack to that track's title,
+   * and loads HTMLAudioElement with the track's preview URL
+   * @returns {void}
+   */
   function pickRandomSong() {
-    // error here where sometimes clicking doesn't fetch a song
-    // poses problems when removing eligible items as we do here
     props.setGuess(null);
     setSuggestions([]);
-    // console.log(currPlayableTracks[0]);
+
     var randomIndex = Math.floor(Math.random() * currPlayableTracks.length);
-    
     const randomTrack = currPlayableTracks[randomIndex].track;
     console.log("answer:", randomTrack.name);
     props.setTrack(randomTrack);
-    // currPlayableTracks.splice(randomIndex, 1);
-    // console.log(randomTrack.preview_url);
-    player.oncanplaythrough = (e) => { // START HERE
-      // console.log("ready");
-    }
 
-    // const player = document.getElementById("player");
     player.src = randomTrack.preview_url + `#t=0,${trackAvailableSeconds}`; // START HERE
-    
     player.volume = 0.3;
-    // player.preload = "auto"; // AND HERE
-
-    // const player = document.getElementById("player");
-    // console.log(player.src, player.srcObject);
 
     setHasStarted(true);
   }
 
+  /**
+   * Sets isGuessCorrect to true or false depending on whether user input matches the current song title
+   * and increments score if user guess is correct
+   * @returns {void}
+   */
   function checkAnswer() {
     const userGuess = document.getElementById("guess").value.toLowerCase();
-    // console.log(userGuess);
     const correctAnswer = props.currentTrack.name.toLowerCase();
 
-    // console.log("guess:", userGuess);
     // console.log("answer:", correctAnswer);
-    console.log("correct?", userGuess === correctAnswer);
 
-    
     props.setGuess(userGuess ? userGuess : " ");
-    // props.setGuess(userGuess);
     props.setIsGuessCorrect(userGuess === correctAnswer);
     if (userGuess === correctAnswer) {
       props.setScore(prev => prev + 1);
     }
+
     setHasStarted(false);
     props.setCurrentStep(3);
   }
 
-
-  function showSuggestion(event) {
+  /**
+   * Sets suggestions array to a list of up to five tracks from the chosen playlist
+   * that match with the user input
+   * @param {EventObject} event
+   * @returns {void}
+   */
+  function generateSuggestions(event) {
     // setGuessSoFar(event.target.value);
     // console.log(chosenPlaylistTrackNames);
     var suggestions = [];
     var guessSoFar = event.target.value.toLowerCase();
+
     for (let i = 0; i < chosenPlaylistTrackNames.length; i++) {
       var trackName = chosenPlaylistTrackNames[i].toLowerCase();
-      
       if (trackName.includes(guessSoFar) && suggestions.length < 5) {
         suggestions.push(chosenPlaylistTrackNames[i]);
       }
     }
     
     setSuggestions(suggestions);
-    // document.getElementById("suggestions").innerHTML = suggestions.join(", ");
   }
 
+  /**
+   * Renders the list of track suggestions
+   * @returns {void}
+   */
   function renderSuggestions() {
     if (suggestions) {
       return suggestions.map((suggestion, i) => (
@@ -121,13 +104,15 @@ export default function GuessingStep(props) {
         >
           {suggestion}
         </li>
-        
       ))
     }
   }
 
+  /**
+   * Toggles audio on and off, displaying the correct button (play or pause)
+   * @returns {void}
+   */
   function toggleAudio() {
-    // const player = document.getElementById("player");
     const audioButton = document.querySelector(".audio-button");
     if (player.src.includes("mp3")) {
       if (player.paused) {
@@ -148,10 +133,6 @@ export default function GuessingStep(props) {
     }
   }
 
-  // function handleKeyboardPress(event) {
-  //   document.getElementById("guess").value = event.target.value;
-  // }
-
   return (
     <div>
       <img width={"15%"} src={props.chosenPlaylist.images[0].url} alt={props.chosenPlaylist.name} />
@@ -161,7 +142,6 @@ export default function GuessingStep(props) {
         <div>
           <div className="audio-buttons">
             <div onClick={toggleAudio} className="audio-button play-button">
-              {/* onClick={() => toggleAudio} */}
             </div>
           </div>
 
@@ -171,21 +151,13 @@ export default function GuessingStep(props) {
               id="guess"
               className="userGuess"
               placeholder="Guess song title"
-              onKeyUp={showSuggestion}
+              onKeyUp={generateSuggestions}
             />
             <ul className="suggestionList_scrollable">{renderSuggestions()}</ul>
           </div>
           <button onClick={checkAnswer}>Submit</button>
         </div>
       }
-      
-      <div className="player">
-        <audio id="player"></audio>
-      </div>
     </div>
   );
 }
-
-// {/* <input type="text" id="guess" placeholder="Guess track name" onKeyUp={catchErrors(showSuggestion)} /> */}
-//       {/* {keyboard} */}
-// {/* <p id="suggestion"></p> */}

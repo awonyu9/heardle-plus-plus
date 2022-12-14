@@ -3,7 +3,8 @@ const express = require('express');
 const fetch = (...args) =>
 	import('node-fetch').then(({default: fetch}) => fetch(...args));
 const router = express();
-const crypto = require('crypto')
+const crypto = require('crypto');
+
 const port = 8888;
 
 const CLIENT_ID = process.env.CLIENT_ID;
@@ -45,8 +46,6 @@ const stateKey = 'spotify_auth_state';
 router.get('/login', (req, res) => {
   const state = generateRandomString(16);
   res.cookie(stateKey, state);
-
-  // var verifier = base64URLEncode(crypto.randomBytes(32)); 
   var code_challenge = base64URLEncode(sha256(VERIFIER));
 
   const scope = [
@@ -60,19 +59,16 @@ router.get('/login', (req, res) => {
     redirect_uri: REDIRECT_URI,
     state: state,
     scope: scope,
-    // show_dialog: true,
-    // code_challenge_method: 'S256',
-    // code_challenge: code_challenge, 
+    show_dialog: true,
+    code_challenge_method: 'S256',
+    code_challenge: code_challenge, 
   }).toString();
   
   res.redirect(`https://accounts.spotify.com/authorize?${params}`);
 });
 
-
 router.get('/callback', async (req, res) => {
   const code = req.query.code || null;
-  // const data = getToken(res, code);
-  // res.send(data);
 
   try {
     const response = await fetch('https://accounts.spotify.com/api/token', {
@@ -85,14 +81,12 @@ router.get('/callback', async (req, res) => {
         grant_type: 'authorization_code',
         code: code,
         redirect_uri: REDIRECT_URI,
-        // client_id: CLIENT_ID,
-        // code_verifier: VERIFIER,
+        client_id: CLIENT_ID,
+        code_verifier: VERIFIER,
       }).toString(),
     });
 
     const data = await response.json();
-
-    // console.log("from login endpoint", data);
     
     if (response.status === 200) {
       const { access_token, refresh_token, expires_in } = data;
@@ -103,17 +97,10 @@ router.get('/callback', async (req, res) => {
         expires_in,
       }).toString();
 
-      // const t = await fetch(`http://localhost:8888/refresh_token?refresh_token=${refresh_token}`, {
-      // })
-
-      // const tt = await t.json();
-      // res.send(tt);
-
       res.redirect(`http://localhost:3000/?${params}`);
     } else {
       res.redirect(`/?${new URLSearchParams({error: 'invalid_token'}).toString()}`);
     }
-    
   } catch (error) {
     res.send(error);
   }
@@ -121,7 +108,6 @@ router.get('/callback', async (req, res) => {
 
 router.get('/refresh_token', async (req, res) => {
   const { refresh_token } = req.query;
-  // const refresh_token = req.query.refresh_token;
 
   try {
     const response = await fetch('https://accounts.spotify.com/api/token', {
@@ -133,24 +119,17 @@ router.get('/refresh_token', async (req, res) => {
       body: new URLSearchParams({
         grant_type: 'refresh_token',
         refresh_token: refresh_token,
-        // client_id: CLIENT_ID,
+        client_id: CLIENT_ID,
       }).toString(),
     });
 
     const data = await response.json();
-
-    // console.log(data);
     
     res.send(data);
-    
   } catch (error) {
     res.send(error);
   }
 });
-
-// router.get('/login', (req, res) => {
-
-// });
 
 router.get('/', (req, res) => {
   res.send('Express home page');

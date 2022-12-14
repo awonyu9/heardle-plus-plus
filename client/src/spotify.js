@@ -1,3 +1,5 @@
+// 95% of this code from: https://www.newline.co/courses/build-a-spotify-connected-app/using-local-storage-to-persist-login-state
+
 // Map for localStorage keys
 const LOCALSTORAGE_KEYS = {
   accessToken: "spotify_access_token",
@@ -71,8 +73,8 @@ function hasTokenExpired() {
 }
 
 /**
- * Use the refresh token in localStorage to hit the /refresh_token endpoint
- * in our Node app, then update values in localStorage with data from response.
+ * Uses the refresh token in localStorage to hit the /refresh_token endpoint
+ * in our Node app, then updates values in localStorage with data from response.
  * @returns {void}
  */
 async function refreshToken() {
@@ -105,7 +107,7 @@ async function refreshToken() {
 }
 
 /**
- * Clear out all localStorage items we've set and reload the page
+ * Clears out all localStorage items we've set and reload the page
  * @returns {void}
  */
 export function logout() {
@@ -127,12 +129,6 @@ export const OPTIONS = {
     }
 }
 
-export async function getCurrentUserProfile() {
-  // console.log(OPTIONS);
-  const res = await fetch(`${BASE_URL}/me`, OPTIONS);
-  return res.json();
-}
-
 /* export async function getUserPlaylists(limit=10, offset=0) {
   const res = await fetch(`${BASE_URL}/me/playlists?limit=${limit}&offset=${offset}`, OPTIONS);
   const data = await res.json();
@@ -143,7 +139,3 @@ export async function getCurrentUserProfile() {
   const res = await fetch(`${BASE_URL}/playlists/${playlist_id}`, OPTIONS);
   return res.json();
 } */
-
-// export function getRandomTrack(tracks) {
-//   const
-// }

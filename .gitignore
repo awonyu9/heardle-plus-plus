@@ -5,3 +5,8 @@ to-do.txt
 
 client/src/Test.js
 client/src/App_og.js
+client/src/README.md
+
+client/src/components/Player.jsx
+client/src/components/Playlists.jsx
+client/src/components/PlayPauseButton.jsx

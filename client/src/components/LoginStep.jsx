@@ -1,20 +1,18 @@
 import { logout } from '../spotify';
 
+/**
+ * Component that encloses the login phase of the game
+ * @param {Object} props 
+ * @returns {JSX.Element}
+ */
 export default function LoginStep(props) {
-  // if (props.currentStep !== 1) {
-  //   return null;
-  // }
-
   return (
     <div>
-      {/* <p>Login step placeholder</p> */}
       {!props.token ?
           <button><a href="http://localhost:8888/login">Log in
               to Spotify</a></button>
-          : <button onClick={logout} className="logout">Log out</button>}
-
-      {/* {props.token && props.moveOn(2)} */}
-
+          : <button onClick={logout} className="logout">Log out</button>
+      }
     </div>
   );
 }

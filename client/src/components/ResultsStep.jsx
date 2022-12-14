@@ -1,13 +1,19 @@
+/**
+ * Component that encloses the results phase of the game
+ * @param {Object} props 
+ * @returns {JSX.Element}
+ */
 export default function ResultsStep(props) {
   if (props.currentStep !== 3) {
     return null;
   }
 
-  // console.log(props.chosenPlaylist);
-  // console.log(props.currentQuizTrack);
-
   var artistNames = props.currentQuizTrack.artists.map(a => a.name).join(", ");
   
+  /**
+   * Shows or hides the overlay box
+   * @returns {void}
+   */
   function toggleOverlay() {
     const overlay = document.getElementById("overlay");
     if (overlay.style.display === "block") {
@@ -49,7 +55,6 @@ export default function ResultsStep(props) {
           Your current score is: {props.score}
         </div>
       </div>
-
     </div>
   );
 }

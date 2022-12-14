@@ -2,41 +2,49 @@ import { useState, useEffect, useRef } from 'react';
 import { catchErrors } from '../utils';
 import { BASE_URL, OPTIONS } from "../spotify";
 
+/**
+ * Component that encloses the playlist selection phase of the game
+ * @param {Object} props 
+ * @returns {JSX.Element}
+ */
 export default function PlaylistSelectionStep(props) {
-  // const [currOffset, setCurrOffset] = useState(1);
   const [tracksData, setTracksData] = useState(null);
   const [loading, setLoading] = useState(false);
   const currFetchCycle = useRef(1);
   
-  async function choosePlaylist(playlistId) { // this is probably where we wanna save visited playlists
+  /**
+   * Makes a call to the Spotify Web API to fetch the tracks of the playlist with playlistId
+   * @param {string} playlistId - The ID of the selected playlist
+   */
+  async function choosePlaylist(playlistId) {
     const res = await fetch(`${BASE_URL}/playlists/${playlistId}`, OPTIONS);
     const playlist = await res.json();
     
     props.setChosenPlaylist(playlist);
-    props.setTracks(playlist.tracks.items); // makes us get a 100 extra songs, leave it for demo
+    props.setTracks(playlist.tracks.items); // makes us get a 100 extra songs, to fix
     setTracksData(playlist.tracks);
 
     // props.setCurrentStep(2); // wrap in conditional
   }
 
+  // Fetches all the chosen playlist's tracks
   useEffect(() => {
     const n_fetchCycles = tracksData ? Math.ceil(tracksData.total / 100) : 10;
-    // console.log(currFetchCycle.current, n_fetchCycles, currFetchCycle === n_fetchCycles);
     if (currFetchCycle.current % n_fetchCycles === 0) {
       currFetchCycle.current = 0;
       setLoading(false);
       props.setCurrentStep(2);
     }
+
     if (!tracksData) {
-      // props.setCurrentStep(2);
-      // return() => {
-      //   currFetchCycle.current = 1;
-      // }
       return;
     }
 
-    // console.log(tracksData);
-
+    /**
+     * Makes another call to the Spotify Web API to get the playlist's tracks
+     * while there are still are tracks to be fetched
+     * @returns {Promise}
+     */
     async function fetchMoreTracks() {
       if (tracksData.next) {
         setLoading(true);
@@ -47,14 +55,8 @@ export default function PlaylistSelectionStep(props) {
     }
 
     for (let i = 0; i < tracksData.items.length; i++) {
-      // console.log(tracksData.items[i]);
       props.setTracks(tracks => [...tracks ? tracks : [], tracksData.items[i]]);
     }
-
-    // props.setTracks(tracksData.items);
-    // console.log(typeof(Object.values(tracksData.items)))
-
-    // props.setTracks(tracks => [...tracks, tracksData.items]);
 
     currFetchCycle.current++;
     catchErrors(fetchMoreTracks());
@@ -65,11 +67,15 @@ export default function PlaylistSelectionStep(props) {
     return null;
   }
 
-  function renderPlaylists() { // move this back to a one-step return
+  /**
+   * Renders all playlist covers and their titles
+   * @returns {void}
+   */
+  function renderPlaylists() {
     if (props.playlists) {
+      // move this back to a one-step return:
       var renderedPlaylists = props.playlists.map((playlist) => (
-        <div className="playlist" key={playlist.id}> 
-        {/* should be <div className="playlist" key={playlist.id}> once I fix duplicate problem */}
+        <div className="playlist" key={playlist.id}>
           <img
             width={"80%"}
             src={playlist.images[0].url}
@@ -79,20 +85,18 @@ export default function PlaylistSelectionStep(props) {
           <p>{playlist.name}</p>
         </div>
       ))
-      // setCurrOffset(currOffset+3);
       return renderedPlaylists;
     }
   }
 
   return (
     <div>
-      {
-        loading ?
-        <div>
+      {loading
+      ? <div>
           <div className="loading-icon"></div>
           <p>Fetching tracks...</p>
         </div>
-        : <div className="playlists">{renderPlaylists()}</div>
+      : <div className="playlists">{renderPlaylists()}</div>
       }
     </div>
   );

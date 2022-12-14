@@ -12,6 +12,7 @@
 :root {
   --heardle-plus-plus-pink: #FD7B7B;
   --heardle-plus-plus-green: rgb(53, 155, 53);
+
   /* background: linear-gradient(pink, var(--heardle-plus-plus-pink)); */
   background-color: var(--heardle-plus-plus-pink);
   text-align: center;
@@ -22,39 +23,14 @@ a, button, img, .autosuggestion { /* quick fix but no good */
 }
 
 hr {
-  background-color: black;
-  /* border-color: black; */
   height: 1px;
-}
-
-.App-header {
-  text-align: center;
+  background-color: black;
 }
 
 button {
-  background-color: white;
+  margin-bottom: 5px;
   border-radius: 2em;
   padding: 10px;
-  margin-bottom: 5px;
-}
-
-a {
-  background-color: white;
-}
-
-audio::-webkit-media-controls-panel {
-  background-color: white;
-}
-
-audio {
-  display: flex;
-}
-
-p {
-  font-size: larger;
-}
-
-input {
   background-color: white;
 }
 
@@ -67,6 +43,10 @@ h5 {
   color: white;
 }
 
+p {
+  font-size: larger;
+}
+
 .playlists {
   display: flex;
   flex-wrap: wrap;
@@ -76,15 +56,6 @@ h5 {
 
 .playlist {
   width: 300px;
-}
-
-.simple-keyboard {
-  font-size: 10px;
-}
-
-.player {
-  display: flex;
-  justify-content: center;
 }
 
 .audio-buttons {
@@ -109,10 +80,6 @@ h5 {
   background-image: url("./icons/pause-button.png");
 }
 
-.autosuggest_wrapper {
-
-}
-
 .suggestionList_scrollable {
   color: white;
 }
@@ -128,19 +95,17 @@ h5 {
 
 .loading-icon::before {
   content: "";
-  width: 50px;
-  height: 50px;
-  background-color: pink;
-  
+  animation-name: loading;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
   border-style: solid;
   border-width: 10px;
   border-color: grey;
   border-top-color: black;
   border-radius: 50%;
-  
-  animation-name: loading;
-  animation-duration: 1s;
-  animation-iteration-count: infinite;
+  width: 50px;
+  height: 50px;
+  background-color: pink;
 }
 
 @keyframes loading {
@@ -151,23 +116,23 @@ h5 {
 
 #overlay {
   position: fixed;
-  display: none;
-  width: 500px;
-  height: 500px;
+  z-index: 2;
   top: 25%;
   left: 35%;
-  background-color: rgba(255, 255, 255, 0.85);
-  z-index: 2;
-  cursor: pointer;
+  display: none;
   border-radius: 15%;
+  width: 500px;
+  height: 500px;
+  background-color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
 }
 
 .overlay-text {
   position: absolute;
   top: 50%;
   left: 50%;
-  font-size: 3em;
-  /* color: white; */
   transform: translate(-50%,-50%);
   -ms-transform: translate(-50%,-50%);
+  font-size: 3em;
+  /* color: white; */
 }
