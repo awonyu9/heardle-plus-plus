@@ -3,7 +3,7 @@ node_modules
 .env
 to-do.txt
 
-client/src/Test.js
+client/src/KeyboardUITest.js
 client/src/App_og.js
 client/src/README.md
 
