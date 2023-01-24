@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "homepage": "https://awonyu9.github.io/heardle-plus-plus",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client \"",
     "server": "nodemon index.js",
     "client": "cd client && npm start",
-    "postinstall": "cd client && npm install"
+    "postinstall": "cd client && npm install",
+    "predeploy": " cd client && npm run build",
+    "deploy": "cd client && gh-pages -d build"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +23,7 @@
   },
   "devDependencies": {
     "concurrently": "^7.5.0",
+    "gh-pages": "^5.0.0",
     "nodemon": "^2.0.20"
   }
 }

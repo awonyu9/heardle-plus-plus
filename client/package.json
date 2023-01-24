@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "proxy": "http://localhost:8888",
+  "homepage": "https://awonyu9.github.io/heardle-plus-plus",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
