@@ -1,0 +1,114 @@
+.ResultsStep .playlist-message {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  margin: 10px 10px;
+}
+
+.ResultsStep .message {
+  margin-right: 10px;
+}
+
+.ResultsStep .message h2 {
+  margin-bottom: 0;
+  color: var(--heardle-plus-plus-green);
+  font-size: 27px;
+}
+
+.ResultsStep .message h5 {
+  margin-top: auto;
+  font-size: 12px;
+}
+
+.ResultsStep .Playlist img {
+  width: 100px;
+}
+
+.ResultsStep .Playlist h4 {
+  font-size: smaller;
+}
+
+.ResultsStep .track-info {
+  margin: 20px auto;
+  background-color: black;
+  max-width: 80%;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ResultsStep .track-info h5 {
+  margin: 0 auto;
+}
+
+.ResultsStep .track-info .title-artist-year .title {
+  font-weight: 900;
+}
+
+.ResultsStep .track-info .title-artist-year {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5px 5px;
+}
+
+.ResultsStep .track-info .title-artist-year .artist-year {
+  color: var(--heardle-plus-plus-green);
+}
+
+.ResultsStep .track-info .title-artist-year h5 {
+  margin-left: 0;
+}
+
+.ResultsStep .track-info img {
+  position: relative;
+  /* width: 10%; */
+}
+
+.ResultsStep .play-again-heading {
+  margin: 0 auto;
+}
+
+.ResultsStep .buttons-container {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+
+.ResultsStep button {
+  border-radius: 2em;
+  border-color: transparent;
+  margin-top: 10px;
+  padding: 10px 20px;
+  height: 50px;
+  color: black;
+  max-width: 70%;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.ResultsStep button.another-playlist {
+  background-color: white;
+}
+
+.ResultsStep button.same-playlist {
+  background-color: var(--heardle-plus-plus-green);
+}
+
+@media screen and (min-width: 500px) {
+  .ResultsStep .buttons-container {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .ResultsStep .buttons-container {
+    justify-content: center;
+  }
+
+  .ResultsStep button {
+    margin: 0 25px;
+  }
+}

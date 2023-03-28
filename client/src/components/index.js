@@ -1,11 +1,15 @@
-import LoginStep from './LoginStep';
-import PlaylistSelectionStep from './PlaylistSelectionStep';
-import GuessingStep from './GuessingStep';
-import ResultsStep from './ResultsStep';
+// import LoginStep from './LoginStep.jsx';
+import Header from './Header.jsx';
+import PlaylistSelectionStep from './PlaylistSelectionStep.jsx';
+import GuessingStep from './GuessingStep.jsx';
+import ResultsStep from './ResultsStep.jsx';
+import Playlist from './Playlist.jsx';
 
 export {
-        LoginStep,
+        // LoginStep,
+        Header,
         PlaylistSelectionStep,
         GuessingStep,
-        ResultsStep
+        ResultsStep,
+        Playlist,
       }

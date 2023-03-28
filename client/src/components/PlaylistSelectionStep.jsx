@@ -1,17 +1,25 @@
 import { useState, useEffect, useRef } from 'react';
 import { catchErrors } from '../utils';
 import { BASE_URL, OPTIONS } from "../spotify";
+import Playlist from './Playlist';
+import "./PlaylistSelectionStep.css";
 
 /**
  * Component that encloses the playlist selection phase of the game
  * @param {Object} props 
  * @returns {JSX.Element}
  */
-export default function PlaylistSelectionStep(props) {
+export default function PlaylistSelectionStep({
+  currentStep,
+  setCurrentStep,
+  setChosenPlaylist,
+  setTracks,
+  playlists,
+}) {
   const [tracksData, setTracksData] = useState(null);
   const [loading, setLoading] = useState(false);
   const currFetchCycle = useRef(1);
-  
+
   /**
    * Makes a call to the Spotify Web API to fetch the tracks of the playlist with playlistId
    * @param {string} playlistId - The ID of the selected playlist
@@ -19,12 +27,12 @@ export default function PlaylistSelectionStep(props) {
   async function choosePlaylist(playlistId) {
     const res = await fetch(`${BASE_URL}/playlists/${playlistId}`, OPTIONS);
     const playlist = await res.json();
-    
-    props.setChosenPlaylist(playlist);
-    props.setTracks(playlist.tracks.items); // makes us get a 100 extra songs, to fix
+
+    setChosenPlaylist(playlist);
+    setTracks(playlist.tracks.items); // makes us get a 100 extra songs, to fix
     setTracksData(playlist.tracks);
 
-    // props.setCurrentStep(2); // wrap in conditional
+    // setCurrentStep(2); // wrap in conditional
   }
 
   // Fetches all the chosen playlist's tracks
@@ -33,7 +41,7 @@ export default function PlaylistSelectionStep(props) {
     if (currFetchCycle.current % n_fetchCycles === 0) {
       currFetchCycle.current = 0;
       setLoading(false);
-      props.setCurrentStep(2);
+      setCurrentStep(2);
     }
 
     if (!tracksData) {
@@ -55,15 +63,17 @@ export default function PlaylistSelectionStep(props) {
     }
 
     for (let i = 0; i < tracksData.items.length; i++) {
-      props.setTracks(tracks => [...tracks ? tracks : [], tracksData.items[i]]);
+      setTracks((tracks) => [
+        ...(tracks ? tracks : []),
+        tracksData.items[i],
+      ]);
     }
 
     currFetchCycle.current++;
     catchErrors(fetchMoreTracks());
+  }, [tracksData]);
 
-  }, [tracksData])
-
-  if (props.currentStep !== 1) {
+  if (currentStep !== 1) {
     return null;
   }
 
@@ -72,32 +82,38 @@ export default function PlaylistSelectionStep(props) {
    * @returns {void}
    */
   function renderPlaylists() {
-    if (props.playlists) {
+    if (playlists) {
       // move this back to a one-step return:
-      var renderedPlaylists = props.playlists.map((playlist) => (
+      return playlists.map((playlist) => (
         <div className="playlist" key={playlist.id}>
-          <img
-            width={"80%"}
+          {/* <img
+            // width={"80%"}
             src={playlist.images[0].url}
             alt={playlist.name}
             onClick={() => catchErrors(choosePlaylist(playlist.id))}
           />
-          <p>{playlist.name}</p>
+          <p>{playlist.name}</p> */}
+          <Playlist 
+            src={playlist.images[0].url}
+            alt={playlist.name}
+            onClick={() => catchErrors(choosePlaylist(playlist.id))}
+          />
         </div>
-      ))
-      return renderedPlaylists;
+      ));
+      // return renderedPlaylists;
     }
   }
 
   return (
-    <div>
-      {loading
-      ? <div>
+    <div className="PlaylistSelectionStep">
+      {loading ? (
+        <div className="loading-container">
           <div className="loading-icon"></div>
-          <p>Fetching tracks...</p>
+          <h4 className="fetching-tracks">Fetching tracks...</h4>
         </div>
-      : <div className="playlists">{renderPlaylists()}</div>
-      }
+      ) : (
+        <div className="playlists">{renderPlaylists()}</div>
+      )}
     </div>
   );
 }

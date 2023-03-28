@@ -1,17 +1,30 @@
 import { useState } from "react";
+import Playlist from "./Playlist";
+import "./GuessingStep.css";
 
 /**
  * Component that encloses the guessing phase of the game
  * @param {Object} props 
  * @returns {JSX.Element}
  */
-export default function GuessingStep(props) {
+export default function GuessingStep({
+  currentStep,
+  setCurrentStep,
+  setGuess,
+  currentTrack,
+  setTrack,
+  setIsGuessCorrect,
+  chosenPlaylist,
+  tracks,
+  player,
+  setScore,
+}) {
   const [suggestions, setSuggestions] = useState([]);
 
   const trackAvailableSeconds = 3;
-  const player = props.player;
+  // const player = player;
   var chosenPlaylistTrackNames = [];
-  var currPlayableTracks = props.tracks;
+  var currPlayableTracks = tracks;
 
   if (currPlayableTracks) {
     for (let i = 0; i < currPlayableTracks.length; i++) {
@@ -22,7 +35,7 @@ export default function GuessingStep(props) {
 
   const [hasStarted, setHasStarted] = useState(false);
 
-  if (props.currentStep !== 2) {
+  if (currentStep !== 2) {
     return null;
   }
 
@@ -33,13 +46,13 @@ export default function GuessingStep(props) {
    * @returns {void}
    */
   function pickRandomSong() {
-    props.setGuess(null);
+    setGuess(null);
     setSuggestions([]);
 
     var randomIndex = Math.floor(Math.random() * currPlayableTracks.length);
     const randomTrack = currPlayableTracks[randomIndex].track;
     console.log("answer:", randomTrack.name);
-    props.setTrack(randomTrack);
+    setTrack(randomTrack);
 
     player.src = randomTrack.preview_url + `#t=0,${trackAvailableSeconds}`; // START HERE
     player.volume = 0.3;
@@ -54,18 +67,18 @@ export default function GuessingStep(props) {
    */
   function checkAnswer() {
     const userGuess = document.getElementById("guess").value.toLowerCase();
-    const correctAnswer = props.currentTrack.name.toLowerCase();
+    const correctAnswer = currentTrack.name.toLowerCase();
 
     // console.log("answer:", correctAnswer);
 
-    props.setGuess(userGuess ? userGuess : " ");
-    props.setIsGuessCorrect(userGuess === correctAnswer);
+    setGuess(userGuess ? userGuess : " ");
+    setIsGuessCorrect(userGuess === correctAnswer);
     if (userGuess === correctAnswer) {
-      props.setScore(prev => prev + 1);
+      setScore((prev) => prev + 1);
     }
 
     setHasStarted(false);
-    props.setCurrentStep(3);
+    setCurrentStep(3);
   }
 
   /**
@@ -86,7 +99,7 @@ export default function GuessingStep(props) {
         suggestions.push(chosenPlaylistTrackNames[i]);
       }
     }
-    
+
     setSuggestions(suggestions);
   }
 
@@ -100,11 +113,11 @@ export default function GuessingStep(props) {
         <li
           key={i}
           className="autosuggestion"
-          onClick={() => document.getElementById("guess").value = suggestion}
+          onClick={() => (document.getElementById("guess").value = suggestion)}
         >
           {suggestion}
         </li>
-      ))
+      ));
     }
   }
 
@@ -126,7 +139,7 @@ export default function GuessingStep(props) {
           audioButton.classList.add("play-button");
           audioButton.style.cursor = "pointer";
           player.currentTime = 0;
-        }, trackAvailableSeconds*1000)
+        }, trackAvailableSeconds * 1000);
       }
     } else {
       pickRandomSong();
@@ -134,30 +147,48 @@ export default function GuessingStep(props) {
   }
 
   return (
-    <div>
-      <img width={"15%"} src={props.chosenPlaylist.images[0].url} alt={props.chosenPlaylist.name} />
-      <h5>{props.chosenPlaylist.name}</h5>
-      {!hasStarted && <button onClick={pickRandomSong}>Click here to start</button>}
-      {hasStarted &&
+    <div className="GuessingStep">
+      {/* <img
+        className="playlist-cover"
+        // width={"15%"}
+        src={chosenPlaylist.images[0].url}
+        alt={chosenPlaylist.name}
+      />
+      <h3>{chosenPlaylist.name}</h3> */}
+      
+      <Playlist 
+        src={chosenPlaylist.images[0].url}
+        alt={chosenPlaylist.name}
+      />
+      
+      {!hasStarted && (
+        <button onClick={pickRandomSong}>Click here to start</button>
+      )}
+      {hasStarted && (
         <div>
           <div className="audio-buttons">
-            <div onClick={toggleAudio} className="audio-button play-button">
-            </div>
+            <div
+              onClick={toggleAudio}
+              className="audio-button play-button"
+            ></div>
           </div>
 
+          {/* rename these classes */}
           <div className="autosuggest_wrapper">
+            <ul className="suggestionList_scrollable">{renderSuggestions()}</ul>
             <input
               type="text"
               id="guess"
               className="userGuess"
-              placeholder="Guess song title"
+              placeholder="Guess the song title here"
               onKeyUp={generateSuggestions}
+              autoComplete="off"
             />
-            <ul className="suggestionList_scrollable">{renderSuggestions()}</ul>
+            {/* <div className="icon"><i className="fas fa-search"></i></div> */}
           </div>
-          <button onClick={checkAnswer}>Submit</button>
+          <button className="submit" onClick={checkAnswer}>Submit song title</button>
         </div>
-      }
+      )}
     </div>
   );
 }

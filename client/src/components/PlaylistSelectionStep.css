@@ -1,0 +1,56 @@
+.PlaylistSelectionStep .loading-container {
+  margin: 30% auto;
+}
+
+.PlaylistSelectionStep .playlists {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 20px;
+}
+
+.PlaylistSelectionStep .Playlist {
+  cursor: pointer;
+}
+
+.PlaylistSelectionStep .Playlist img {
+  width: 80%;
+}
+
+@media screen and (min-width: 400px) {
+  .PlaylistSelectionStep .playlists {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .PlaylistSelectionStep .playlists {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.PlaylistSelectionStep .loading-icon {
+  display: flex;
+  justify-content: center;
+}
+
+.PlaylistSelectionStep .loading-icon::before {
+  content: "";
+  animation-name: loading;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  /* border-style: solid;
+  border-width: 10px;
+  border-color: grey; */
+  border: 10px solid grey;
+  border-top-color: black;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background-color: pink;
+}
+
+@keyframes loading {
+  to {
+    transform: rotate(1turn);
+  }
+}

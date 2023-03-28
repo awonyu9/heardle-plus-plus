@@ -8,7 +8,7 @@ import {
 import { catchErrors } from './utils';
 // components:
 import {
-        LoginStep,
+        Header,
         PlaylistSelectionStep,
         GuessingStep,
         ResultsStep
@@ -33,11 +33,11 @@ export default function App() {
   const [currentQuizTrack, setCurrentQuizTrack] = useState(null);
   const [currentUserGuess, setCurrentUserGuess] = useState(null);
   const [isGuessCorrect, setIsGuessCorrect] = useState(false);
+  // try a list of objects instead
   // const [visitedPlaylists, setVisitedPlaylists] = useState({});
   const [score, setScore] = useState(0);
 
   const player = document.getElementById("player");
-  const themes = ["var(--heardle-plus-plus-pink)", "var(--heardle-plus-plus-green)", "goldenrod"];
 
   useEffect(() => {
     setToken(accessToken);
@@ -53,9 +53,9 @@ export default function App() {
       }).toString();
   
       const res = await fetch(`${BASE_URL}/me/playlists?`+ params, OPTIONS);
-      const playlistsData = await res.json();
+      const { total } = await res.json();
 
-      const total = playlistsData.total;
+      // const total = playlistsData.total;
 
       var allPlaylists = [];
 
@@ -73,39 +73,19 @@ export default function App() {
 
     accessToken && catchErrors(getAllPlaylists());
   }, [])
-
-  /**
-   * Changes colour theme of the app to the next theme in the themes array
-   * @returns {void}
-   */
-  function toggleTheme() {
-    const root = document.querySelector(":root");
-    const currColor = root.style.backgroundColor;
-    const currIndex = themes.indexOf(currColor);
-    root.style.backgroundColor = themes[(currIndex+1) % themes.length];
-  }
   
   return (
     <div className="App">
-       <header className="App-header">
-        <h1>Heardle++ (working title)</h1>
-        {currentStep >= 1 &&
-          <LoginStep
-            currentStep={currentStep}
-            setCurrentStep={setCurrentStep}
+          <Header
             token={token}
+            setCurrentStep={setCurrentStep}
           />
-        }
-        <button onClick={toggleTheme}>Toggle theme</button>
-        <h4 style={{color: 'red'}}>Pro tip: Always refresh the page to see if an update is really working</h4>
-        <hr />
-       </header>
 
         {(token && playlists) &&
           <PlaylistSelectionStep
             currentStep={currentStep}
             setCurrentStep={setCurrentStep}
-            accessToken={accessToken}
+            // accessToken={accessToken}
             setChosenPlaylist={setChosenPlaylist}
             setTracks={setTracks}
             playlists={playlists}
