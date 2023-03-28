@@ -148,13 +148,6 @@ export default function GuessingStep({
 
   return (
     <div className="GuessingStep">
-      {/* <img
-        className="playlist-cover"
-        // width={"15%"}
-        src={chosenPlaylist.images[0].url}
-        alt={chosenPlaylist.name}
-      />
-      <h3>{chosenPlaylist.name}</h3> */}
       
       <Playlist 
         src={chosenPlaylist.images[0].url}

@@ -1,19 +1,21 @@
 .PlaylistSelectionStep .loading-container {
-  margin: 30% auto;
+  margin: 100px auto;
 }
 
 .PlaylistSelectionStep .playlists {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   row-gap: 20px;
+  column-gap: 20px;
 }
 
-.PlaylistSelectionStep .Playlist {
+.PlaylistSelectionStep .Playlist h4 {
   cursor: pointer;
 }
 
 .PlaylistSelectionStep .Playlist img {
   width: 80%;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 400px) {

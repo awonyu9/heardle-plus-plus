@@ -50,21 +50,23 @@ export default function ResultsStep({
         </div>
       </div>
 
-      {/* <div className="">
-        <img
-          className="playlist-cover"
-          // width={"80%"}
-          src={chosenPlaylist.images[0].url}
-          alt={chosenPlaylist.name}
-          // onClick={() => catchErrors(choosePlaylist(playlist.id))}
-        />
-        <p>{chosenPlaylist.name}</p>
-      </div> */}
-
       <div className="track-info">
         <div className="title-artist-year">
-          <h5 className="title">{currentQuizTrack.name}</h5>
-          <h5 className="artist-year">{artistNames} ・ {currentQuizTrack.album.release_date.slice(0, 4)}</h5>
+          <h5 className="title">
+            <a
+              href={currentQuizTrack.external_urls.spotify}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Link to track on Spotify"
+              alt="Link to track on Spotify"
+            >
+              {/* {currentQuizTrack.name} <div className="play-button"></div> */}
+              {currentQuizTrack.name}
+            </a>
+          </h5>
+          <h5 className="artist-year">
+            {artistNames} ・ {currentQuizTrack.album.release_date.slice(0, 4)}
+          </h5>
         </div>
         <img
           src={currentQuizTrack.album.images[0].url}
@@ -72,36 +74,7 @@ export default function ResultsStep({
         />
       </div>
 
-      {/* <img
-        className="track-cover"
-        // width={"15%"}
-        src={currentQuizTrack.album.images[0].url}
-        alt={currentQuizTrack.album.name + " album cover"}
-      />
-      <h5>
-        Correct answer:
-        <a
-          href={currentQuizTrack.external_urls.spotify}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {currentQuizTrack.name} by {artistNames} (
-          {currentQuizTrack.album.release_date.slice(0, 4)})
-        </a>
-      </h5>
-      <h5>
-        From the playlist:
-        <a
-          href={chosenPlaylist.external_urls.spotify}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {chosenPlaylist.name}
-        </a>
-      </h5> */}
-
-      {/* <hr /> */}
-      <h3 className="play-again-heading">Play again</h3>
+      <h3 className="play-again-heading">Play again!</h3>
       <div className="buttons-container">
         <button className="another-playlist" onClick={() => setCurrentStep(1)}>
           Another playlist
