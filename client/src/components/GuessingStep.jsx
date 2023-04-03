@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Playlist from "./Playlist";
 import "./GuessingStep.css";
+import Autocomplete from "react-autocomplete";
 
 /**
  * Component that encloses the guessing phase of the game
@@ -19,6 +20,7 @@ export default function GuessingStep({
   player,
   setScore,
 }) {
+  const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   const trackAvailableSeconds = 3;
@@ -179,6 +181,28 @@ export default function GuessingStep({
             />
             {/* <div className="icon"><i className="fas fa-search"></i></div> */}
           </div>
+
+          <Autocomplete
+            items={chosenPlaylistTrackNames}
+            shouldItemRender={(item, value) => (
+              item.toLowerCase().indexOf(value.toLowerCase()) > -1
+              && value !== ""
+            )}
+            getItemValue={item => item}
+            renderItem={(item, isHighlighted) => (
+              <li className={"autosuggestion " + isHighlighted && "selected"}>
+                {item}
+              </li>
+            )}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onSelect={(value) => setInputValue(value)}
+            inputProps={{
+              placeholder: "Guess the song title here",
+              className:"user-guess"
+            }}
+          />
+
           <button className="submit" onClick={checkAnswer}>Submit song title</button>
         </div>
       )}

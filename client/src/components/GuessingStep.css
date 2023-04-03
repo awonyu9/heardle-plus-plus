@@ -98,3 +98,15 @@
   color: black;
   font-weight: bold;
 }
+
+.Autocomplete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Autocomplete .user-guess {
+  background-color: lightgrey;
+  width: 500px;
+  color: black;
+}
