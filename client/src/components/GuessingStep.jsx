@@ -21,7 +21,6 @@ export default function GuessingStep({
   setScore,
 }) {
   const [inputValue, setInputValue] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
 
   const trackAvailableSeconds = 3;
   // const player = player;
@@ -49,7 +48,7 @@ export default function GuessingStep({
    */
   function pickRandomSong() {
     setGuess(null);
-    setSuggestions([]);
+    setInputValue("");
 
     var randomIndex = Math.floor(Math.random() * currPlayableTracks.length);
     const randomTrack = currPlayableTracks[randomIndex].track;
@@ -68,7 +67,8 @@ export default function GuessingStep({
    * @returns {void}
    */
   function checkAnswer() {
-    const userGuess = document.getElementById("guess").value.toLowerCase();
+    // const userGuess = document.getElementById("guess").value.toLowerCase();
+    const userGuess = inputValue.toLowerCase();
     const correctAnswer = currentTrack.name.toLowerCase();
 
     // console.log("answer:", correctAnswer);
@@ -81,46 +81,6 @@ export default function GuessingStep({
 
     setHasStarted(false);
     setCurrentStep(3);
-  }
-
-  /**
-   * Sets suggestions array to a list of up to five tracks from the chosen playlist
-   * that match with the user input
-   * @param {EventObject} event
-   * @returns {void}
-   */
-  function generateSuggestions(event) {
-    // setGuessSoFar(event.target.value);
-    // console.log(chosenPlaylistTrackNames);
-    var suggestions = [];
-    var guessSoFar = event.target.value.toLowerCase();
-
-    for (let i = 0; i < chosenPlaylistTrackNames.length; i++) {
-      var trackName = chosenPlaylistTrackNames[i].toLowerCase();
-      if (trackName.includes(guessSoFar) && suggestions.length < 5) {
-        suggestions.push(chosenPlaylistTrackNames[i]);
-      }
-    }
-
-    setSuggestions(suggestions);
-  }
-
-  /**
-   * Renders the list of track suggestions
-   * @returns {void}
-   */
-  function renderSuggestions() {
-    if (suggestions) {
-      return suggestions.map((suggestion, i) => (
-        <li
-          key={i}
-          className="autosuggestion"
-          onClick={() => (document.getElementById("guess").value = suggestion)}
-        >
-          {suggestion}
-        </li>
-      ));
-    }
   }
 
   /**
@@ -168,40 +128,31 @@ export default function GuessingStep({
             ></div>
           </div>
 
-          {/* rename these classes */}
-          <div className="autosuggest_wrapper">
-            <ul className="suggestionList_scrollable">{renderSuggestions()}</ul>
-            <input
-              type="text"
-              id="guess"
-              className="userGuess"
-              placeholder="Guess the song title here"
-              onKeyUp={generateSuggestions}
-              autoComplete="off"
+          <div className="autocomplete">
+            <Autocomplete
+              items={chosenPlaylistTrackNames}
+              shouldItemRender={(item, value) => (
+                item.toLowerCase().indexOf(value.toLowerCase()) > -1
+                && value !== ""
+              )}
+              getItemValue={item => item}
+              renderItem={(item, isHighlighted) => (
+                <div key={item} className={isHighlighted ? "suggestion selected" : "suggestion no-selected"}>
+                  {item}
+                </div>
+              )}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onSelect={(value) => setInputValue(value)}
+              inputProps={{
+                placeholder: "Guess the song title here",
+                className:"input"
+              }}
+              renderMenu={items => (
+                <div className="menu" children={items} />
+              )}
             />
-            {/* <div className="icon"><i className="fas fa-search"></i></div> */}
           </div>
-
-          <Autocomplete
-            items={chosenPlaylistTrackNames}
-            shouldItemRender={(item, value) => (
-              item.toLowerCase().indexOf(value.toLowerCase()) > -1
-              && value !== ""
-            )}
-            getItemValue={item => item}
-            renderItem={(item, isHighlighted) => (
-              <li className={"autosuggestion " + isHighlighted && "selected"}>
-                {item}
-              </li>
-            )}
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onSelect={(value) => setInputValue(value)}
-            inputProps={{
-              placeholder: "Guess the song title here",
-              className:"user-guess"
-            }}
-          />
 
           <button className="submit" onClick={checkAnswer}>Submit song title</button>
         </div>

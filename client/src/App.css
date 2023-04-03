@@ -26,7 +26,7 @@
 
 /* overlay/score card should be its own component, so this will move: */
 
-.overlay {
+/* .overlay {
   position: fixed;
   z-index: 2;
   top: 25%;
@@ -46,5 +46,6 @@
   transform: translate(-50%,-50%);
   -ms-transform: translate(-50%,-50%);
   font-size: 3em;
-  /* color: white; */
+  color: white;
 }
+*/
