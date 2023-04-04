@@ -23,7 +23,7 @@ export default function Header({ token, setCurrentStep }) {
 
   return (
     <header className="Header">
-      <h1 title="Go back to homepage" onClick={() => setCurrentStep(1)}>Heardle++</h1>
+      <h1>Heardle++</h1>
       {!token ?
           <button><a href="http://localhost:8888/login">Log in
               to Spotify</a></button>

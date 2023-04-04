@@ -68,6 +68,7 @@ export default function GuessingStep({
    */
   function checkAnswer() {
     // const userGuess = document.getElementById("guess").value.toLowerCase();
+    player.pause();
     const userGuess = inputValue.toLowerCase();
     const correctAnswer = currentTrack.name.toLowerCase();
 

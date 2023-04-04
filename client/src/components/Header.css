@@ -13,13 +13,8 @@
 
 .Header h1 {
   margin: 0 auto;
-  cursor: pointer;
   width: fit-content;
   font-size: 2.5em;
-}
-
-.Header h1:hover {
-  text-decoration: underline;
 }
 
 .Header button {
