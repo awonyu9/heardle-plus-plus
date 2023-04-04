@@ -118,7 +118,7 @@ export default function GuessingStep({
       />
       
       {!hasStarted && (
-        <button onClick={pickRandomSong}>Click here to start</button>
+        <button className="start" onClick={pickRandomSong}>Start</button>
       )}
       {hasStarted && (
         <div>
