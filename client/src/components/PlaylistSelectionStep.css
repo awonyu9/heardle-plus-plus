@@ -8,13 +8,17 @@
   row-gap: 20px;
 }
 
+.PlaylistSelectionStep .Playlist img {
+  width: 80%;
+  cursor: pointer;
+}
+
 .PlaylistSelectionStep .Playlist h4 {
   cursor: pointer;
 }
 
-.PlaylistSelectionStep .Playlist img {
-  width: 80%;
-  cursor: pointer;
+.PlaylistSelectionStep .Playlist h4:hover {
+  text-decoration: underline;
 }
 
 @media screen and (min-width: 400px) {

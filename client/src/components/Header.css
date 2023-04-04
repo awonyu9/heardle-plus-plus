@@ -18,6 +18,10 @@
   font-size: 2.5em;
 }
 
+.Header h1:hover {
+  text-decoration: underline;
+}
+
 .Header button {
   padding: 10px 10px;
   border: 1px solid white;
@@ -25,6 +29,13 @@
   cursor: pointer;
   font-weight: bold;
   margin-top: 22px;
+}
+
+.Header button:hover {
+  /* border-left-width: 3px;
+  border-right-width: 3px;
+  border-top-width: 3px; */
+  text-decoration: underline;
 }
 
 .Header a {
