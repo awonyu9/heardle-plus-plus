@@ -76,10 +76,10 @@ export default function App() {
   
   return (
     <div className="App">
-          <Header
-            token={token}
-            setCurrentStep={setCurrentStep}
-          />
+        <Header
+          token={token}
+          setCurrentStep={setCurrentStep}
+        />
 
         {(token && playlists) &&
           <PlaylistSelectionStep
