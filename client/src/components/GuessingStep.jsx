@@ -22,7 +22,7 @@ export default function GuessingStep({
 }) {
   const [inputValue, setInputValue] = useState("");
 
-  const trackAvailableSeconds = 3;
+  const trackAvailableSeconds = 4;
   // const player = player;
   var chosenPlaylistTrackNames = [];
   var currPlayableTracks = tracks;

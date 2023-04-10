@@ -1,36 +1,25 @@
-# Heardle++
+<div align="center">
+  <a href="https://github.com/awonyu9/math-lab-resources">
+    <img src="./readme-assets/heardle-plus-plus-logo.png" alt="Logo" width="80" height="80" style="background-color: white">
+  </a>
+  <h1>Heardle++</h1>
+  <p>
+    Heardle++ is an improved version of the web game Heardle, based on two core ideas:
+    <ol>
+      <li>The user should be able to quiz themselves on songs they might actually know - and not arbitrarily chosen "popular" Western songs.</li>
+      <li>The user should be able to play as many times as they want, and not just once per day.</li>
+    </ol>
+  </p>
+  <p>
+    From these two ideas was born Heardle++, a music quiz web app where people with Spotify accounts, can log in, select any of their public, private, shared and liked playlists, and quiz themselves on their own library's songs, as many times as they want.
+  </p>
+</div>
 
-Heardle++ (working title) is an improved version of the web game Heardle, based on two core ideas:
-1. The user should be able to quiz themselves on songs they might actually know - and not arbitrarily chosen "popular" Western songs.
-2. The user should be able to play as many times as they want, and not just once per day.
+## About The Project
 
-From these two ideas was born Heardle++, a music quiz web app where people with Spotify accounts, can log in, select any of their public, private, shared and liked playlists, and quiz themselves on their own library's songs, as many times as they want.
+Here is a short video showing how Heardle++ works:
 
-## Screenshots
-
-Here are screenshots of the playlist selection, guessing, and results phases:
-
-<img src="https://user-images.githubusercontent.com/71611172/212188451-f21a35c9-c346-4379-be69-14b6c4e62030.png" width="500" />
-
-*Playlist selection phase*
-
-<img src="https://user-images.githubusercontent.com/71611172/212188470-bac226a1-d72b-4ac1-ad2c-6ea4d2311a1b.png" width="500" />
-
-*Guessing phase*
-
-
-<img src="https://user-images.githubusercontent.com/71611172/212188490-a08b2b7e-295d-4c89-ae77-aac9cb0f1b46.png" width="500" />
-
-*Results phase*
-
-## Installation
-1. Unzip heardle-plus-plus.zip
-2. In the heardle-plus-plus directory, open your terminal and run `npm install`. This will install all the project's dependencies.
-3. To run the React app, run `npm start`. This will automatically open a tab that points to `localhost:3000`, where Heardle++ runs.
-
-*A Spotify account is required to fully use the app.*
-
-*As this app is still in development, any user would have to be added to a list of authorised users.*
+<!-- <video src="./readme-assets/heardle-plus-plus.mp4"> -->
 
 ## Technologies used
 - The front-end was developed in React.
@@ -42,9 +31,48 @@ Here are screenshots of the playlist selection, guessing, and results phases:
 - The React code is in the `./client/src/` directory, specifically in the `App.js` file.
 - All React components are located in the `./client/src/components/` directory.
 
-## Future improvements
+## Screenshots
 
-Right now, with deployment as a goal, I still need to improve the styling in CSS, and fix some minor bugs and quality-of-life issues, such as the play button not playing the track right away.
+Additionally, here are screenshots of the playlist selection, guessing, and results phases, for both desktop and mobile:
+
+### Desktop
+
+<img src="./readme-assets/heardle-plus-plus-1.png" width="500" />
+
+*Playlist selection phase on desktop*
+
+<img src="./readme-assets/heardle-plus-plus-2.png" width="500" />
+
+*Guessing phase on desktop*
+
+<img src="./readme-assets/heardle-plus-plus-3.png" width="500" />
+
+*Results phase on desktop*
+
+<img src="./readme-assets/heardle-plus-plus-mobile-1.png" width="200" />
+
+### Mobile
+
+*Playlist selection phase on mobile*
+
+<img src="./readme-assets/heardle-plus-plus-mobile-2.png" width="200" />
+
+*Guessing phase on mobile*
+
+<img src="./readme-assets/heardle-plus-plus-mobile-3.png" width="200" />
+
+*Results phase on mobile*
+
+## Installation
+1. Unzip heardle-plus-plus.zip
+2. In the heardle-plus-plus directory, open your terminal and run `npm install`. This will install all the project's dependencies.
+3. To run the React app, run `npm start`. This will automatically open a tab that points to `localhost:3000`, where Heardle++ runs.
+
+*A Spotify account is required to fully use the app.*
+
+*As this app is still in development, any user would have to contact me to be added to a list of authorised users.*
+
+## Future improvements
 
 In the foreseeable future, I would like to connect Heardle++ to other music streaming platform APIs, such as Apple Music's or Pandora's.
 
