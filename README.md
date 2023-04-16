@@ -1,11 +1,11 @@
 <div align="center">
   <a href="https://github.com/awonyu9/math-lab-resources">
-    <img src="./readme-assets/heardle-plus-plus-logo.png" alt="Logo" width="80" height="80" style="background-color: white">
+    <img src="./readme-assets/heardle-plus-plus-logo.png" alt="Logo" width="150" height="150" style="background-color: white">
   </a>
   <h1>Heardle++</h1>
   <p>
     Heardle++ is an improved version of the web game Heardle, based on two core ideas:
-    <ol>
+    <ol align="left">
       <li>The user should be able to quiz themselves on songs they might actually know - and not arbitrarily chosen "popular" Western songs.</li>
       <li>The user should be able to play as many times as they want, and not just once per day.</li>
     </ol>
@@ -19,7 +19,7 @@
 
 Here is a short video showing how Heardle++ works:
 
-<!-- <video src="./readme-assets/heardle-plus-plus.mp4"> -->
+https://user-images.githubusercontent.com/71611172/230841046-a00a74fc-d69a-4b5d-b7c0-97569257161c.mp4
 
 ## Technologies used
 - The front-end was developed in React.
