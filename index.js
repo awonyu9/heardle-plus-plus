@@ -4,12 +4,18 @@ const fetch = (...args) =>
 	import('node-fetch').then(({default: fetch}) => fetch(...args));
 const router = express();
 const crypto = require('crypto');
+const path = require('path');
 
-const port = 8888;
+// Priority serve any static files.
+router.use(express.static(path.resolve(__dirname, './client/build')));
+
+// const port = 8888;
+const port = process.env.PORT || 8888;
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
+const FRONTEND_URI = process.env.FRONTEND_URI;
 const VERIFIER = base64URLEncode(crypto.randomBytes(32));
 
 router.use((req, res, next) => {
@@ -97,7 +103,7 @@ router.get('/callback', async (req, res) => {
         expires_in,
       }).toString();
 
-      res.redirect(`http://localhost:3000/?${params}`);
+      res.redirect(`${FRONTEND_URI}/?${params}`);
     } else {
       res.redirect(`/?${new URLSearchParams({error: 'invalid_token'}).toString()}`);
     }
@@ -135,6 +141,12 @@ router.get('/', (req, res) => {
   res.send('Express home page');
 })
 
+// All remaining requests return the React app, so it can handle routing.
+router.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+});
+
 router.listen(port, () => {
-  console.log('---------------------\nServer running on port', port);
+  // console.log('---------------------\nServer running on port', port);
+  console.log(`Express app listening at http://localhost:${port}`);
 });

@@ -3,6 +3,11 @@ import "./Header.css";
 import { logout } from "../spotify"
 import { useCallback, useEffect } from "react";
 
+const LOGIN_URI =
+  process.env.NODE_ENV !== "production"
+      ? "http://localhost:8888/login"
+      : "https://heardle-plus-plus.herokuapp.com/login";
+
 /**
  * Component that ...
  * @returns {JSX.Element}
@@ -35,12 +40,12 @@ export default function Header({ token, setCurrentStep }) {
     <header className="Header">
       <h1>Heardle++</h1>
       {!token ?
-          <button><a href="http://localhost:8888/login">Log in
+          <button><a href={LOGIN_URI}>Log in
               to Spotify</a></button>
           : <button onClick={logout} className="logout">Log out</button>
       }
       <button onClick={toggleTheme} title="Press T">Toggle theme</button>
-      {/* <h4 style={{color: 'red'}}>Pro tip: Always refresh the page to see if an update is really working</h4> */}
+      {/* <h4 style={{color: "red"}}>Pro tip: Always refresh the page to see if an update is really working</h4> */}
       <hr />
     </header>
   )

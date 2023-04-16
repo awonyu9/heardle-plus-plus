@@ -3,11 +3,21 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "14.15.0"
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "client/node_modules"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client \"",
     "server": "nodemon index.js",
-    "client": "cd client && npm start"
+    "client": "cd client && npm start",
+    "postinstall": "cd client && npm install",
+    "build": "NODE_ENV=production cd client/ && npm install && npm run build",
+    "start-server": "node index.js"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +29,7 @@
     "react-autocomplete": "^1.8.1"
   },
   "devDependencies": {
-    "concurrently": "^7.5.0",
+    "concurrently": "^7.6.0",
     "nodemon": "^2.0.20"
   }
 }
