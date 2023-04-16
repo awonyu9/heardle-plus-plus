@@ -1,7 +1,7 @@
 // import LoginStep from "./LoginStep"
 import "./Header.css";
 import { logout } from "../spotify"
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 
 const LOGIN_URI =
   process.env.NODE_ENV !== "production"
@@ -12,7 +12,7 @@ const LOGIN_URI =
  * Component that ...
  * @returns {JSX.Element}
  */
-export default function Header({ token, setCurrentStep }) {
+export default function Header({ token }) {
   /**
    * Changes colour theme of the app to the next theme in the themes array
    * @returns {void}
@@ -27,14 +27,15 @@ export default function Header({ token, setCurrentStep }) {
     header.style.backgroundColor = themes[(currIndex+1) % themes.length];
   }, [])
 
-  useEffect(() => {
-    function handleKeydown(e) {
-      if (e.key === "t") {
-        toggleTheme();
-      }
-    }
-    window.addEventListener("keydown", handleKeydown);
-  }, [toggleTheme]);
+  // make it Ctrl+T instead, because it interferes with GuessingStep's input
+  // useEffect(() => {
+  //   function handleKeydown(e) {
+  //     if (e.key === "t") {
+  //       toggleTheme();
+  //     }
+  //   }
+  //   window.addEventListener("keydown", handleKeydown);
+  // }, [toggleTheme]);
 
   return (
     <header className="Header">
