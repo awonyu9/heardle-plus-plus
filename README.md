@@ -4,16 +4,18 @@
   </a>
   <h1>Heardle++</h1>
   <p>
-    Heardle++ is an improved version of the web game Heardle, based on two core ideas:
+    <a href="https://heardle-plus-plus.herokuapp.com/" alt="To Heardle++ website">Heardle++</a> is an improved version of the web game Heardle, based on two core ideas:
     <ol align="left">
       <li>The user should be able to quiz themselves on songs they might actually know - and not arbitrarily chosen "popular" Western songs.</li>
       <li>The user should be able to play as many times as they want, and not just once per day.</li>
     </ol>
   </p>
   <p>
-    From these two ideas was born Heardle++, a music quiz web app where people with Spotify accounts, can log in, select any of their public, private, shared and liked playlists, and quiz themselves on their own library's songs, as many times as they want.
+    From these two ideas was born Heardle++, a music quiz web app where people with Spotify accounts can log in, select any of their public, private, shared and liked playlists, and quiz themselves on their own library's songs, as many times as they want.
   </p>
 </div>
+
+## Play Heardle++ at: https://heardle-plus-plus.herokuapp.com/
 
 ## About The Project
 
@@ -22,14 +24,14 @@ Here is a short video showing how Heardle++ works:
 https://user-images.githubusercontent.com/71611172/230841046-a00a74fc-d69a-4b5d-b7c0-97569257161c.mp4
 
 ## Technologies used
-- The front-end was developed in React.
+- The front-end was built in React.
 - The back-end consists of an Express server that handles the OAuth process.
 - The Spotify Web API was used to retrieve the user's playlist and track data.
 
 ## Directory structure
-- The Express code is in the `index.js` file at the top level.
+- The Express code is in the `index.js` file in the root directory.
 - The React code is in the `./client/src/` directory, specifically in the `App.js` file.
-- All React components are located in the `./client/src/components/` directory.
+- All React components are located in the `./client/src/components/` directory, along with their CSS files.
 
 ## Screenshots
 
@@ -63,7 +65,7 @@ Additionally, here are screenshots of the playlist selection, guessing, and resu
 
 *Results phase on mobile*
 
-## Installation
+## Local installation
 1. Unzip heardle-plus-plus.zip
 2. In the heardle-plus-plus directory, open your terminal and run `npm install`. This will install all the project's dependencies.
 3. To run the React app, run `npm start`. This will automatically open a tab that points to `localhost:3000`, where Heardle++ runs.
