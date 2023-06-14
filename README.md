@@ -4,7 +4,7 @@
   </a>
   <h1>Heardle++</h1>
   <p>
-    <a href="https://heardle-plus-plus.herokuapp.com/" alt="To Heardle++ website">Heardle++</a> is an improved version of the web game Heardle, based on two core ideas:
+    Heardle++ is an improved version of the web game Heardle, based on two core ideas:
     <ol align="left">
       <li>The user should be able to quiz themselves on songs they might actually know - and not arbitrarily chosen "popular" Western songs.</li>
       <li>The user should be able to play as many times as they want, and not just once per day.</li>
@@ -14,8 +14,6 @@
     From these two ideas was born Heardle++, a music quiz web app where people with Spotify accounts can log in, select any of their public, private, shared and liked playlists, and quiz themselves on their own library's songs, as many times as they want.
   </p>
 </div>
-
-## Play Heardle++ at: https://heardle-plus-plus.herokuapp.com/
 
 ## About The Project
 
