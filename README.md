@@ -1,10 +1,10 @@
 <div align="center">
-  <a href="https://github.com/awonyu9/math-lab-resources">
+  <a href="https://github.com/awonyu9/heardle-plus-plus">
     <img src="./readme-assets/heardle-plus-plus-logo.png" alt="Logo" width="150" height="150" style="background-color: white">
   </a>
   <h1>Heardle++</h1>
   <p>
-    Heardle++ is an improved version of the web game Heardle, based on two core ideas:
+    Heardle++ is an improved version of the (now-defunct) web game Heardle, based on two core ideas:
     <ol align="left">
       <li>The user should be able to quiz themselves on songs they might actually know - and not arbitrarily chosen "popular" Western songs.</li>
       <li>The user should be able to play as many times as they want, and not just once per day.</li>
@@ -76,4 +76,4 @@ Additionally, here are screenshots of the playlist selection, guessing, and resu
 
 In the foreseeable future, I would like to connect Heardle++ to other music streaming platform APIs, such as Apple Music's or Pandora's.
 
-The end goal will be to make Heardle++ available to anyone, whether they have a music streaming subscription or not. This would probably involve storing some pre-selected genre- or artist-specific playlists in a database of some sort.
+The end goal is to make Heardle++ available to anyone, whether they have a music streaming subscription or not. This would probably involve storing some pre-selected genre- or artist-specific playlists in a database of some sort.
